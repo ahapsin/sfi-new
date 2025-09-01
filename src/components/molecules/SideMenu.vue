@@ -1,4 +1,7 @@
 <template>
+        <div class="flex border rounded-lg p-2 mb-2 sticky sticky-top">
+                <account-avatar />
+        </div>
         <div>
                 <DisclosMenu :menus="listMenu.response">
                 </DisclosMenu>

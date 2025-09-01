@@ -9,17 +9,23 @@
         </div>
       </div>
       <div class=" h-full flex flex-col py-4">
-        <n-form-item label="username" path="username" :rule="rules.username">
+        <n-form-item label="Username" path="username" :rule="rules.username">
           <n-input v-model:value="dynamicForm.username" placeholder="username" size="large"/>
         </n-form-item>
-        <n-form-item label="password" path="password" :rule="rules.password">
+        <n-form-item label="Password" path="password" :rule="rules.password">
           <n-input type="password" v-model:value="dynamicForm.password" placeholder="Password"
                    show-password-on="mousedown" @keyup.enter="handleLogin" size="large"/>
         </n-form-item>
-        <n-button class="flex w-full" :loading="loading" icon-placement="left" type="primary"
-                  @click="handleLogin" size="large">
-          Login
-        </n-button>
+        <n-space vertical>
+          <n-button class="flex w-full" :loading="loading" icon-placement="left" type="primary"
+                    @click="handleLogin" size="large">
+            Login
+          </n-button>
+          <n-button class="flex w-full" icon-placement="left"  secondary type="primary"
+                    @click="handleLogin" size="large">
+            Register
+          </n-button>
+        </n-space>
         
       </div>
     </n-form>

@@ -14,7 +14,7 @@
       </div>
      
     </div>
-    <div class="fixed bottom-0 bg-slate-50 w-full justify-center flex p-2 text-gray-400">los v. {{ appVersion }} @sakurafinansial</div>
+    <div class="fixed bottom-0 bg-slate-50 w-full justify-center flex p-2 text-gray-400">los v. {{ appVersion }} @{{ appTitle }}</div>
   </div>
   
 </template>
@@ -24,6 +24,7 @@ import pjson from '../../../package.json';
 import Dashboard from './DashboardPage.vue';
 const appVersion = pjson.version;
 const appAccentColor = import.meta.env.VITE_APP_ACCENT_COLOR;
+const appTitle = import.meta.env.VITE_APP_TITLE;
 const logged = ref(false);
 
 onMounted(() => {

@@ -1,45 +1,27 @@
 <template>
   <n-layout class="h-screen">
-    <n-layout-header>
-      <n-page-header class="sticky outline outline-1 outline-slate-300 top-0 z-50 backdrop-blur p-2">
-        <template #title>
-          <n-space align="center">
-            <n-button circle quaternary @click="router.back()"
-              v-if="route.name !== 'landing' && route.name !== 'dashboard'" class="flex md:hidden">
-              <template #icon>
-                <n-icon>
-                  <back-icon />
-                </n-icon>
-              </template>
-            </n-button>
-            <n-button circle quaternary @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
+    <n-layout position="absolute" has-sider>
+      <n-layout-sider :width='200' :collapsed-width="0" :show-collapsed-content="false"
+        :collapsed="sideMenu.sideEffect ? true : false" 
+        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none" bordered>
+        <n-scrollbar>
+          <div class="flex sticky sticky-top top-0 bg-white z-50 p-2 gap-2">
+             <!-- <n-button circle text @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
               v-if="width > 450">
               <template #icon>
                 <v-icon name="bi-grid" v-if="sideMenu.sideEffect" />
                 <v-icon name="bi-grid-fill" v-else />
               </template>
-            </n-button>
+            </n-button> -->
             <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
-            <div class="flex flex-col items-left justify-center">
-              <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
-              <span class="text-[10px]">v. {{ appVersion }}</span>
-            </div>
-          </n-space>
-          <span class="hidden md:flex capitalize"></span>
-        </template>
-        <template #extra>
-          <div class="flex items-center">
-            <account-avatar />
+              <div class="flex flex-col items-left justify-center">
+                <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
+                <span class="text-[10px]">v. {{ appVersion }}</span>
+              </div>
           </div>
-        </template>
-      </n-page-header>
-    </n-layout-header>
-    <n-layout position="absolute" style="top: 60px" has-sider>
-      <n-layout-sider :width='200' :collapsed-width="0" :show-collapsed-content="false"
-        :collapsed="sideMenu.sideEffect ? true : false" content-style="padding: 10px;"
-        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none" bordered>
-        <n-scrollbar>
-          <SideMenu />
+          <div class="p-2">
+            <SideMenu />
+          </div>
         </n-scrollbar>
       </n-layout-sider>
       <n-layout :class="`bg-slate-100`">
@@ -55,7 +37,6 @@
           <RouterView />
           <slot />
         </div>
-
       </n-layout>
     </n-layout>
   </n-layout>
@@ -102,8 +83,3 @@ const widthScreen = () => {
 onMounted(() => widthScreen());
 </script>
 
-<style scoped>
-.sidebar {
-  @apply p-2 bg-white md:flex flex-col justify-between border-r hidden;
-}
-</style>

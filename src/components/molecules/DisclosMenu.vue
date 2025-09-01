@@ -10,7 +10,10 @@
     <n-collapse :default-expanded-names="$route.matched[0].name" accordion class="mt-4">
       <n-collapse-item :name="menu.menuitem.labelmenu" v-for="menu in props.menus" :key="menu.menuid">
         <template #header>
-          <div class="text-[10px] text-pr text-bold">{{ menu.menuitem.labelmenu?.toUpperCase() }}</div>
+          <div class="text-[10px] text-pr text-bold">
+            {{ menu }}
+            {{ menu.menuitem.labelmenu?.toUpperCase() }}
+          </div>
         </template>
         <template #arrow>
           <v-icon name="bi-dot" scale="0.5" />
@@ -23,7 +26,6 @@
                 : handleStart
               " :class="isActive ? 'bg-slate-200 text-pr font-semibold' : 'hover:bg-pr-500 hover:text-white'">
               <v-icon :name="submenu.leading" />
-              
               {{ submenu.sublabel?.toUpperCase() }}
             </div>
           </router-link>
