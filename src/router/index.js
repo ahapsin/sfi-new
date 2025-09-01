@@ -402,7 +402,7 @@ const router = createRouter({
 });
 
 const apptitle = import.meta.env.VITE_APP_TITLE;
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
     document.title = to.meta?.title ?? apptitle
 })
 

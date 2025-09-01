@@ -1,29 +1,26 @@
 <template>
   <div class="w-full">
-
     <n-form :model="dynamicForm" ref="formRef">
-      <div class="flex flex-col md:flex-row gap-4 items-center pb-8">
+      <div class="flex flex-col gap-4 items-center pb-8">
         <img class="h-14 md:h-16 " :src="applogo" alt="logo_company">
-        <div class="flex flex-col justify-center items-center md:items-start">
-          <span class="font-bold">LOAN ORIGINATION SYSTEM</span>
-          <span class="md:text-2xl font-bold">{{ apptitle }}</span>
+        <div class="flex flex-col justify-center items-center ">
+          <span class="md:text-xl font-semibold">Sign in to LOS</span>
+          <span class="md:text-xl font-semibold">{{ apptitle }}</span>
         </div>
       </div>
       <div class=" h-full flex flex-col py-4">
         <n-form-item label="username" path="username" :rule="rules.username">
-          <n-input v-model:value="dynamicForm.username" placeholder="username" />
+          <n-input v-model:value="dynamicForm.username" placeholder="username" size="large"/>
         </n-form-item>
         <n-form-item label="password" path="password" :rule="rules.password">
           <n-input type="password" v-model:value="dynamicForm.password" placeholder="Password"
-                   show-password-on="mousedown" @keyup.enter="handleLogin" />
+                   show-password-on="mousedown" @keyup.enter="handleLogin" size="large"/>
         </n-form-item>
         <n-button class="flex w-full" :loading="loading" icon-placement="left" type="primary"
-                  @click="handleLogin">
+                  @click="handleLogin" size="large">
           Login
         </n-button>
-        <div class="flex justify-center mt-4 text-sm">
-          <n-text>v. {{ appVersion }}</n-text>
-        </div>
+        
       </div>
     </n-form>
   </div>
@@ -33,11 +30,11 @@ import { ref, reactive, onMounted } from "vue";
 import { useMessage } from "naive-ui";
 import router from '../../router';
 import { useApi } from "../../helpers/axios";
-import pjson from '../../../package.json';
+
 
 const apptitle = import.meta.env.VITE_APP_TITLE;
 const applogo = import.meta.env.VITE_APP_LOGO;
-const appVersion = pjson.version;
+
 const dynamicForm = reactive({
   username: "",
   password: "",
