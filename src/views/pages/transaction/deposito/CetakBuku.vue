@@ -26,7 +26,7 @@
                                         <n-text strong class="text-white px-2">BILYET SIMPANAN BERJANGKA </n-text>
                                     </div>
                                     <div class="flex justify-center">
-                                        <n-text strong class="px-2">NO .BILYET : 1234566789 </n-text>
+                                        <n-text strong class="px-2">NO .BILYET : {{ selectedRekening.deposit_number }} </n-text>
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                 <div class="w-1/3">
                                     <div class="flex flex-col border p-2 border-black">
                                         <n-text strong italic>Kepada Yth.</n-text>
-                                        <n-text strong>{{ selectedRekening.nama_pemilik }}</n-text>
+                                        <n-text strong>{{ selectedRekening.deposit_holder }}</n-text>
 
                                         Jl. Laut Tengah No. 7
                                         Kel. Timur Jaya Kec. Samudera
@@ -47,13 +47,13 @@
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Bunga setiap bulan akan dibayarkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.nama_pemilik }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
+                                        <n-text strong>{{ selectedRekening.deposit_number }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.acc_source }}</n-text>
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Pada tanggal jatuh tempo, pokok akan dikreditkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.nama_pemilik }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
+                                        <n-text strong>{{ selectedRekening.deposit_number }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.acc_source }}</n-text>
                                     </div>
                                 </div>
                                 <div class="w-full">
@@ -61,37 +61,37 @@
                                         <tr>
                                             <td class="w-[160px]">No.Rekening</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening?.no_rekening }}</td>
+                                            <td>{{ selectedRekening?.acc_source }}</td>
                                         </tr>
                                         <tr>
                                             <td>Sukuk Bunga</td>
                                             <td>:</td>
-                                            <td>{{ }}</td>
+                                            <td>{{ selectedRekening.int_rate }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jangka Waktu</td>
                                             <td>:</td>
-                                            <td>?????</td>
+                                            <td>{{ selectedRekening.period}}</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Valuta</td>
                                             <td>:</td>
-                                            <td>?????</td>
+                                            <td>{{ selectedRekening.entry_date }}</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Jatuh Tempo</td>
                                             <td>:</td>
-                                            <td>?????</td>
+                                            <td>{{ selectedRekening.mature_date }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jumlah Pokok</td>
                                             <td>:</td>
-                                            <td>{{ (selectedRekening.saldo) }}</td>
+                                            <td>{{ (selectedRekening.deposit_value) }}</td>
                                         </tr>
                                     </table>
                                     <div class="border border-black p-2 flex flex-col mt-2">
                                         <n-text italic>Terbilang</n-text>
-                                        <n-text strong class="justify-center flex">==={{ terbilang(selectedRekening.saldo)
+                                        <n-text strong class="justify-center flex">==={{ terbilang(selectedRekening.deposit_value)
                                         }}===</n-text>
                                     </div>
                                     <div class="mt-4">
@@ -167,7 +167,7 @@ const FetchDataDepo = async (e) => {
     selectedRekening.value = null;
     isLoading.value = true;
     const response = await useApi({
-        api: `deposits_detail/${e}`,
+        api: `deposits/${e}`,
         method: 'GET',
         token: localStorage.getItem('token')
     });

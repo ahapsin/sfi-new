@@ -1,14 +1,14 @@
 <template>
 
 
-    <n-card class="w-full" title="Tutup Rekening" :segmented="true" size="small">
+    <n-card class="w-full" title="Pencairan Deposito" :segmented="true" size="small">
         <n-card embedded>
             <div class="flex gap-4">
                 <n-form-item label="Tanggal Valuta">
                     <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
                 </n-form-item>
                 <n-form-item label="Pilih No Deposito" class="w-full">
-                    <n-select filterable v-model:value="rekening" :options="selectOptions"
+                    <n-select filterable v-model:value="rekening" :options="data" label-field="no_deposito" value-field="no_deposito"
                         @update:value="handleUpdateValue" />
                 </n-form-item>
             </div>
@@ -56,16 +56,20 @@ const keterangan = ref();
 const selectedRekening = ref(null);
 const selectOptions = ref([]);
 const modalRekening = ref(false);
-
+const data=ref();
 const fetchData = async () => {
     isLoading.value = true;
-    const response = await useApi({ url: 'http://localhost:3001/closed_rekening' });
+    const response = await useApi({
+        api: 'deposits',
+        method: 'GET',
+        token: localStorage.getItem('token')
+    });
     if (!response.ok) {
         message.error("error");
         isLoading.value = false;
     } else {
         isLoading.value = false;
-        dataRekeningClosed.value = response.data;
+        data.value = response.data;
     }
 }
 const fetchRekening = async () => {
