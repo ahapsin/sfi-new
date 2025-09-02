@@ -7,7 +7,7 @@
                         <n-card embedded>
                             <n-form-item label="Pilih Customer" class="w-1/2">
                                 <n-select filterable v-model:value="customer" :options="dataCustomer"
-                                    :render-label="renderLabel" label-field="nama" value-field="id"
+                                    :render-label="renderLabel" label-field="nama" value-field="cust_code"
                                     @update:value="handleUpdateValue" />
                                 <n-divider vertical></n-divider>
                                 <n-button type="primary" @click="modalState = true">
@@ -33,7 +33,7 @@
                             </div>
                         </n-card>
                         <n-card>
-                            {{ newData }}
+
                             <n-form>
                                 <div class="flex flex-col-3 gap-4">
                                     <n-form-item label="Nomor Deposito" class="w-full">
@@ -50,16 +50,17 @@
                                             class="flex !w-full" />
                                     </n-form-item>
                                     <n-form-item label="Sumber Dana" class="w-full">
-                                        <n-select :options="optSumberDana" value-field="v" label-field="l" tag
-                                            filterable v-model:value="newData.sumber_dana"></n-select>
+                                        <n-select :options="accounts" value-field="no_rekening"
+                                            label-field="no_rekening" tag filterable
+                                            v-model:value="newData.sumber_dana"></n-select>
                                     </n-form-item>
 
                                 </div>
                                 <div class="flex flex-col-3 gap-4">
                                     <n-form-item label="Sukuk Bunga (%)" class="w-full">
                                         <n-input-number :parse="parse" :format="format" :max="100"
-                                            v-model:value="newData.suku_bunga" placeholder="Sukuk Bunga" :show-button="false"
-                                            class="flex !w-full" />
+                                            v-model:value="newData.suku_bunga" placeholder="Sukuk Bunga"
+                                            :show-button="false" class="flex !w-full" />
                                     </n-form-item>
                                     <n-form-item label="Restitusi Pajak" class="w-full">
                                         <n-select :options="optResPajak" value-field="v" label-field="l" tag filterable
@@ -75,7 +76,7 @@
                                     </n-form-item>
                                 </div>
                                 <div>
-                                    <n-form-item label="Tanggal Mulai" >
+                                    <n-form-item label="Tanggal Mulai">
                                         <n-date-picker placeholder="Tanggal Lahir"
                                             v-model:formatted-value="newData.tgl_mulai" value-format="yyyy-MM-dd"
                                             format="dd-MM-yyyy" type="date" @update:value="handleTanggalMulai" />
@@ -131,15 +132,15 @@ const nominal = ref(null);
 const emit = defineEmits(['saved']);
 
 const newData = reactive({
-    no_deposito:null,
-    periode:null,
-    nominal:null,
-    sumber_dana:null,
-    sukuk_bunga:null,
-    restitusi_pajak:null,
-    rollover:null,
-    pembagi:null,
-    tgl_mulai:null
+    no_deposito: null,
+    periode: null,
+    nominal: null,
+    sumber_dana: null,
+    sukuk_bunga: null,
+    restitusi_pajak: null,
+    rollover: null,
+    pembagi: null,
+    tgl_mulai: null
 })
 
 const year = new Date().getFullYear(); // Misalnya: 2025
@@ -208,7 +209,7 @@ const fetchJenisTabungan = async () => {
 const saveData = async (e) => {
     isLoading.value = true;
     const response = await useApi({
-        api: 'account',
+        api: 'deposits',
         method: 'POST',
         data: e,
         token: localStorage.getItem('token')
@@ -220,8 +221,31 @@ const saveData = async (e) => {
         isLoading.value = false;
     }
 }
+
+const accounts = ref();
+const isLoadingAccount = ref(false);
+const getAccountlist = async (e) => {
+    isLoadingAccount.value = true;
+    const response = await useApi({
+        api: `account_by_custcode/${e}`,
+        method: 'get',
+        token: localStorage.getItem('token'),
+    });
+    if (!response.ok) {
+        message.error("error");
+        isLoading.value = false;
+        isLoadingAccount.value = false;
+    } else {
+        isLoading.value = false;
+        accounts.value = response.data;
+        isLoadingAccount.value = false;
+    }
+}
 const handleUpdateValue = (val, options) => {
     selectedCustomer.value = options;
+    newData.sumber_dana = null;
+    getAccountlist(val);
+
 }
 const handleUpdateSavings = (val, opt) => {
     setoran_awal.value = opt.minimal_saldo;
@@ -240,10 +264,9 @@ const handleSavedNewCustomers = async () => {
 }
 const handleSaveNewRekening = async () => {
     const body = {
-        customer: selectedCustomer.value,
-        no_rekening: no_rekening.value,
-        tabungan: selectedSaving.value,
-        setoran_awal: setoran_awal.value,
+        ...newData,
+        nama_pemilik: selectedCustomer.value.nama,
+        cust_code: customer.value
     }
     await saveData(body);
     emit('saved', true);

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-2 cursor-pointer">
+  <div class="flex items-center gap-2 cursor-pointer ">
           <n-avatar round size="small" class="aspect-square" :src="dataUser
                     ? dataUser.PHOTO_URL
                     : 'https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-vert.png'
@@ -8,7 +8,7 @@
         </n-avatar>
        
                 <div>
-                  <span class="flex flex-col items-end">
+                  <span class="flex flex-col items-start">
                     <n-text type="primary" class="text-primary hidden md:flex uppercase"><strong>{{ dataUser?.nama }}</strong></n-text>
                       <small class="text-gray-400 hidden md:flex uppercase"> POS :{{ dataUser?.cabang_nama }}</small>
                   </span>

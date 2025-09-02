@@ -1,37 +1,32 @@
 <template>
   <div class="flex flex-col gap-1">
     <router-link to="/">
-      <div class="flex gap-2  rounded-xl p-2 w-full hover:bg-pr-500 hover:text-white'"
-        :class="$route.name === 'landing' ? 'bg-pr text-white font-bold' : 'bg-white'">
+      <div class="flex gap-2  rounded-xl p-2 w-full hover:bg-pr-100 hover:text-white'"
+        :class="$route.name === 'landing' ? 'bg-pr-50 text-pr font-bold' : 'bg-white'">
         <v-icon name="bi-grid" />
         DASHBOARD
       </div>
     </router-link>
-    <n-collapse :default-expanded-names="$route.matched[0].name" accordion class="mt-4">
-      <n-collapse-item :name="menu.menuitem.labelmenu" v-for="menu in props.menus" :key="menu.menuid">
-        <template #header>
-          <div class="text-[10px] text-pr text-bold">
-            {{ menu }}
-            {{ menu.menuitem.labelmenu?.toUpperCase() }}
+   
+      <n-text :name="menu.menuitem.labelmenu" v-for="menu in props.menus" :key="menu.menuid">
+       
+          <div class="text-[10px] text-gray-400 text-bold ps-2 capitalize">
+            {{ menu.menuitem.labelmenu }}
           </div>
-        </template>
-        <template #arrow>
-          <v-icon name="bi-dot" scale="0.5" />
-        </template>
+        
         <div v-for="submenu in menu.menuitem.submenu" class="py-1" :key="submenu">
           <router-link :to="`${menu.menuitem.routename}${submenu.subroute}`" v-slot="{ isActive }" @click="handleStart">
             <div class="flex gap-2  rounded-xl p-2 w-full" @click="
               width < 620
                 ? (sideMenu.sideEffect = !sideMenu.sideEffect)
                 : handleStart
-              " :class="isActive ? 'bg-slate-200 text-pr font-semibold' : 'hover:bg-pr-500 hover:text-white'">
+              " :class="isActive ? 'bg-slate-200 text-pr font-semibold' : 'hover:bg-pr-100 hover:text-pr'">
               <v-icon :name="submenu.leading" />
               {{ submenu.sublabel?.toUpperCase() }}
             </div>
           </router-link>
         </div>
-      </n-collapse-item>
-    </n-collapse>
+      </n-text>
   </div>
 </template>
 

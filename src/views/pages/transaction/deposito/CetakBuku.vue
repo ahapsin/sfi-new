@@ -86,7 +86,7 @@
                                         <tr>
                                             <td>Jumlah Pokok</td>
                                             <td>:</td>
-                                            <td>{{ (selectedRekening.saldo).toLocaleString() }}</td>
+                                            <td>{{ (selectedRekening.saldo) }}</td>
                                         </tr>
                                     </table>
                                     <div class="border border-black p-2 flex flex-col mt-2">
@@ -146,7 +146,7 @@ const fetchData = async () => {
     selectedRekening.value = null;
     isLoading.value = true;
     const response = await useApi({
-        api: 'account',
+        api: 'deposits',
         method: 'GET',
         token: localStorage.getItem('token')
     });
@@ -157,68 +157,35 @@ const fetchData = async () => {
         isLoading.value = false;
         dataRekening.value = response.data;
         selectOptions.value = response.data.map(row => ({
-            label: `${row.no_rekening} ${row.nama_pemilik}`,
-            value: row.no_rekening,
+            label: `${row.no_deposito} ${row.nama_pemilik}`,
+            value: row.no_deposito,
             disabled: row.status === 'inactive'
         }));
     }
 }
-
-const fetchDataAktifitas = async (e) => {
+const FetchDataDepo = async (e) => {
+    selectedRekening.value = null;
     isLoading.value = true;
-    const response = await useApi({ url: `http://localhost:3001/aktivitas?nomor_rekening=${e}` });
+    const response = await useApi({
+        api: `deposits_detail/${e}`,
+        method: 'GET',
+        token: localStorage.getItem('token')
+    });
     if (!response.ok) {
         message.error("error");
         isLoading.value = false;
     } else {
         isLoading.value = false;
-        dataAktifitas.value = response.data;
+        selectedRekening.value = response.data;
     }
 }
 
 
-const columnsAktifitas = [
-    {
-        title: "Tgl Transaksi",
-        key: "tgl_transaksi",
-        render(row) {
-            return h("div", moment(row.tgl_transaksi).format('DDMMYYYY'))
-        }
-    },
-    {
-        title: "Buku",
-        key: "buku"
-    },
-    {
-        title: "Hal",
-        key: "hal"
-    },
-    {
-        title: "Baris",
-        key: "baris"
-    },
-    {
-        title: "Sandi",
-        key: "sandi_transaksi"
-    },
-    {
-        title: "Nominal",
-        key: "nominal",
-        render(row) {
-            return h("div", row.nominal.toLocaleString())
-        }
-    },
-    {
-        title: "Saldo",
-        key: "saldo",
-        render(row) {
-            return h("div", row.saldo.toLocaleString())
-        }
-    },
-];
+
 const handleUpdateValue = async (val, options) => {
-    selectedRekening.value = _.find(dataRekening.value, { no_rekening: val });
-    await fetchDataAktifitas(val);
+    selectedRekening.value = val;
+    await FetchDataDepo(val);
+    
 }
 function formatKey(key) {
     return key.replace(/_/g, ' ')

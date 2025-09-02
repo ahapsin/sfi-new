@@ -61,7 +61,7 @@ const handleCancelBuka = () => {
 const handleSavedNewAccount = async () => {
     await fetchData();
     modalBukaRekening.value = false;
-    message.success('Rekening berhasil ditambahkan');
+    message.success('Deposito berhasil ditambahkan');
 }
 const handleTutupRekening = () => {
     modalTutupRekening.value = true;
@@ -70,7 +70,7 @@ const handleTutupRekening = () => {
 const fetchData = async () => {
     isLoading.value = true;
     const response = await useApi({
-        api: 'account',
+        api: 'deposits',
         method: 'GET',
         token: localStorage.getItem('token')
     });
@@ -86,7 +86,7 @@ const fetchData = async () => {
 const columns = [
     {
         title: "No Deposito",
-        key: "no_rekening"
+        key: "no_deposito"
     },
     {
         title: "Atas Nama",
@@ -97,27 +97,8 @@ const columns = [
         key: "alamat"
     },
     {
-        title: "Ibu Kandung",
-        key: "nama_ibu_kandung"
-    },
-    {
         title: "Nominal",
         key: "saldo"
-    },
-    {
-        title: "Status",
-        key: "status",
-        render(row) {
-            return h(
-                NTag,
-                {
-                    type: row.status === 'active' ? 'success' : 'error',
-                },
-                {
-                    default: () => row.status,
-                }
-            );
-        }
     },
 ]
 

@@ -13,7 +13,7 @@
                 <v-icon name="bi-grid-fill" v-else />
               </template>
             </n-button> -->
-            <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
+            <img class="h-[36px] md:h-[36px]" :src="applogo" alt="logo_company" />
               <div class="flex flex-col items-left justify-center">
                 <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
                 <span class="text-[10px]">v. {{ appVersion }}</span>
@@ -24,11 +24,12 @@
           </div>
         </n-scrollbar>
       </n-layout-sider>
-      <n-layout :class="`bg-slate-100`">
+      <n-layout :class="`bg-pr-50`">
         <div class="p-0 md:p-4">
           <n-page-header @back="handleBack">
             <template #header>
               <n-breadcrumb v-if="width > 480">
+
                 <n-breadcrumb-item @click="router.push('/')">DASHBOARD</n-breadcrumb-item>
                 <n-breadcrumb-item v-if="$route.name != 'landing'">{{ $route.name?.toUpperCase() }}</n-breadcrumb-item>
               </n-breadcrumb>
