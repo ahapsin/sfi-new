@@ -9,9 +9,9 @@
                     </n-form-item>
                     <n-card v-if="selectedRekening" embedded title="Detail Bilyet" size="small" :segmented="true">
                         <template #header-extra>
-                            <n-button type="primary">Cetak Billyet</n-button>
+                            <n-button type="primary" @click="printBillyet">Cetak Billyet</n-button>
                         </template>
-                        <div class="border border-black p-4 bg-white">
+                        <div class="border border-black p-4 bg-white" ref="billyetRef">
                             <div class="flex justify-between">
                                 <div class="flex gap-4">
                                     <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
@@ -26,7 +26,7 @@
                                         <n-text strong class="text-white px-2">BILYET SIMPANAN BERJANGKA </n-text>
                                     </div>
                                     <div class="flex justify-center">
-                                        <n-text strong class="px-2">NO .BILYET : {{ selectedRekening.deposit_number }} </n-text>
+                                        <n-text strong class="px-2">NO .BILYET : {{ selectedRekening.no_deposito }} </n-text>
                                     </div>
                                 </div>
                             </div>
@@ -39,21 +39,18 @@
                                 <div class="w-1/3">
                                     <div class="flex flex-col border p-2 border-black">
                                         <n-text strong italic>Kepada Yth.</n-text>
-                                        <n-text strong>{{ selectedRekening.deposit_holder }}</n-text>
-
-                                        Jl. Laut Tengah No. 7
-                                        Kel. Timur Jaya Kec. Samudera
-                                        Kota Malang
+                                        <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>
+                                        {{ selectedRekening.alamat }}
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Bunga setiap bulan akan dibayarkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.deposit_number }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.acc_source }}</n-text>
+                                        <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Pada tanggal jatuh tempo, pokok akan dikreditkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.deposit_number }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.acc_source }}</n-text>
+                                        <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
                                     </div>
                                 </div>
                                 <div class="w-full">
@@ -61,38 +58,38 @@
                                         <tr>
                                             <td class="w-[160px]">No.Rekening</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening?.acc_source }}</td>
+                                            <td>{{ selectedRekening?.no_rekening }}</td>
                                         </tr>
                                         <tr>
                                             <td>Sukuk Bunga</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.int_rate }}</td>
+                                            <td>{{ selectedRekening.suku_bunga }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jangka Waktu</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.period}}</td>
+                                            <td>{{ selectedRekening.tempo}}</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Valuta</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.entry_date }}</td>
+                                            <td>{{ selectedRekening.tanggal_valuta }}</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Jatuh Tempo</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.mature_date }}</td>
+                                            <td>{{ selectedRekening.tanggal_jth_tmpo }}</td>
                                         </tr>
                                         <tr>
                                             <td>Jumlah Pokok</td>
                                             <td>:</td>
-                                            <td>{{ (selectedRekening.deposit_value) }}</td>
+                                            <td>Rp. {{ selectedRekening.jumlah_pokok.toLocaleString() }}</td>
                                         </tr>
                                     </table>
                                     <div class="border border-black p-2 flex flex-col mt-2">
                                         <n-text italic>Terbilang</n-text>
-                                        <n-text strong class="justify-center flex">==={{ terbilang(selectedRekening.deposit_value)
-                                        }}===</n-text>
+                                        <n-text strong class="justify-center flex">==={{ terbilang(selectedRekening.jumlah_pokok)
+                                        }} Rupiah===</n-text>
                                     </div>
                                     <div class="mt-4">
                                         <div class="flex justify-center strong"><strong>KSP SAKURA FINANSIAL
@@ -142,6 +139,14 @@ const bukuFilter = ref(1)
 const halBarisAwal = ref({ hal: 1, baris: 1 })
 const halBarisAkhir = ref({ hal: 2, baris: 1 })
 
+const billyetRef = ref();
+const printBillyet = () => {
+    const { handlePrint } = useVueToPrint({
+        content: billyetRef,
+        documentTitle: "Billyet",
+    });
+    handlePrint();
+}
 const fetchData = async () => {
     selectedRekening.value = null;
     isLoading.value = true;
