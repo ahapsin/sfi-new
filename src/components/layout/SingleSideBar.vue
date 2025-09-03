@@ -25,11 +25,31 @@
         </n-scrollbar>
       </n-layout-sider>
       <n-layout :class="`bg-pr-50`">
+        <div v-if="width < 678">
+          <div>
+            <div class="flex sticky sticky-top top-0 bg-white z-50 p-2 gap-2 justify-between px-6">
+             <!-- <n-button circle text @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
+              v-if="width > 450">
+              <template #icon>
+                <v-icon name="bi-grid" v-if="sideMenu.sideEffect" />
+                <v-icon name="bi-grid-fill" v-else />
+              </template>
+            </n-button> -->
+            <div class="flex">
+              <img class="h-[36px] md:h-[36px]" :src="applogo" alt="logo_company" />
+                <div class="flex flex-col items-left justify-center">
+                  <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
+                  <span class="text-[10px]">v. {{ appVersion }}</span>
+                </div>
+            </div>
+              <AccountAvatar/>
+          </div>
+          </div>
+        </div>
         <div class="p-0 md:p-4">
           <n-page-header @back="handleBack">
             <template #header>
               <n-breadcrumb v-if="width > 480">
-
                 <n-breadcrumb-item @click="router.push('/')">DASHBOARD</n-breadcrumb-item>
                 <n-breadcrumb-item v-if="$route.name != 'landing'">{{ $route.name?.toUpperCase() }}</n-breadcrumb-item>
               </n-breadcrumb>
@@ -58,6 +78,7 @@ import { useRoute } from "vue-router";
 import pjson from '../../../package.json';
 import router from "../../router";
 import { useSidebar } from "../../stores/sidebar";
+import AccountAvatar from "../molecules/AccountAvatar.vue";
 
 const route = useRoute();
 const applogo = import.meta.env.VITE_APP_LOGO;
