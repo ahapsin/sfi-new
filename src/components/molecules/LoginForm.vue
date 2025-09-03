@@ -21,10 +21,10 @@
                     @click="handleLogin" size="large">
             Login
           </n-button>
-          <n-button class="flex w-full" icon-placement="left"  secondary type="primary"
+          <!-- <n-button class="flex w-full" icon-placement="left"  secondary type="primary"
                     @click="handleLogin" size="large">
             Register
-          </n-button>
+          </n-button> -->
         </n-space>
         
       </div>
