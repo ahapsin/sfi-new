@@ -26,7 +26,8 @@
                                         <n-text strong class="text-white px-2">BILYET SIMPANAN BERJANGKA </n-text>
                                     </div>
                                     <div class="flex justify-center">
-                                        <n-text strong class="px-2">NO .BILYET : {{ selectedRekening.no_deposito }} </n-text>
+                                        <n-text strong class="px-2">NO .BILYET : {{ selectedRekening.no_deposito }}
+                                        </n-text>
                                     </div>
                                 </div>
                             </div>
@@ -36,6 +37,7 @@
                                     sebagai berikut:</n-text>
                             </div>
                             <div class="flex w-full pt-4 gap-4">
+
                                 <div class="w-1/3">
                                     <div class="flex flex-col border p-2 border-black">
                                         <n-text strong italic>Kepada Yth.</n-text>
@@ -43,14 +45,15 @@
                                         {{ selectedRekening.alamat }}
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
-                                        <n-text> Bunga setiap bulan akan dibayarkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
+                                        <n-text> Bunga setiap bulan akan dibayarkan ke :
+                                        </n-text>
+                                        <n-text strong>{{ selectedRekening.no_rek_sumber_dana }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.nama_sumber_dana }}</n-text>
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Pada tanggal jatuh tempo, pokok akan dikreditkan ke :</n-text>
-                                        <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.no_rekening }}</n-text>
+                                        <n-text strong>{{ selectedRekening.no_rek_tujuan }}</n-text>
+                                        <n-text strong>AC. {{ selectedRekening.nama_rek_tujuan }}</n-text>
                                     </div>
                                 </div>
                                 <div class="w-full">
@@ -58,17 +61,18 @@
                                         <tr>
                                             <td class="w-[160px]">No.Rekening</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening?.no_rekening }}</td>
+                                            <td>{{ selectedRekening.no_deposito }}</td>
                                         </tr>
                                         <tr>
                                             <td>Sukuk Bunga</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.suku_bunga }}</td>
+                                            <td>{{ selectedRekening.suku_bunga }}% per tahun</td>
                                         </tr>
                                         <tr>
                                             <td>Jangka Waktu</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.tempo}}</td>
+                                            <td>{{ selectedRekening.tempo }} ( {{terbilang(selectedRekening.tempo)}} )
+                                                bulan</td>
                                         </tr>
                                         <tr>
                                             <td>Tanggal Valuta</td>
@@ -88,8 +92,9 @@
                                     </table>
                                     <div class="border border-black p-2 flex flex-col mt-2">
                                         <n-text italic>Terbilang</n-text>
-                                        <n-text strong class="justify-center flex">==={{ terbilang(selectedRekening.jumlah_pokok)
-                                        }} Rupiah===</n-text>
+                                        <n-text strong class="justify-center flex">==={{
+                                            terbilang(selectedRekening.jumlah_pokok)
+                                            }} Rupiah===</n-text>
                                     </div>
                                     <div class="mt-4">
                                         <div class="flex justify-center strong"><strong>KSP SAKURA FINANSIAL
@@ -135,6 +140,16 @@ const startRow = ref(0);
 const printArea = ref();
 const headArea = ref();
 
+function formatTanggalIndoIntl(tgl) {
+    const [day, month, year] = tgl.split('-')
+    const dateObj = new Date(`${year}-${month}-${day}`)
+
+    return new Intl.DateTimeFormat('id-ID', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+    }).format(dateObj)
+}
 const bukuFilter = ref(1)
 const halBarisAwal = ref({ hal: 1, baris: 1 })
 const halBarisAkhir = ref({ hal: 2, baris: 1 })
@@ -190,7 +205,7 @@ const FetchDataDepo = async (e) => {
 const handleUpdateValue = async (val, options) => {
     selectedRekening.value = val;
     await FetchDataDepo(val);
-    
+
 }
 function formatKey(key) {
     return key.replace(/_/g, ' ')

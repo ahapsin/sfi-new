@@ -1,6 +1,7 @@
 <template>
     <div class="flex gap-4 w-full">
         <div class="w-full">
+        
             <n-space vertical>
                 <n-card :title="`Penempatan Deposito Berjangka`" :segmented="true" size="small">
                     <n-space vertical>
@@ -25,7 +26,7 @@
                                             <div><strong class="capitalize">{{ formatKey(key) }}</strong></div>
                                             <div>
                                                 <n-ellipsis style="max-width: 120px">{{ value ? value : 'N/A'
-                                                    }}</n-ellipsis>
+                                                }}</n-ellipsis>
                                             </div>
                                         </div>
                                     </div>
@@ -50,9 +51,26 @@
                                             class="flex !w-full" />
                                     </n-form-item>
                                     <n-form-item label="Sumber Dana" class="w-full">
-                                        <n-select :options="accounts" value-field="no_rekening"
-                                            label-field="no_rekening" tag filterable
-                                            v-model:value="newData.sumber_dana"></n-select>
+                                        <div>
+                                            <n-select :options="accounts" value-field="no_rekening"
+                                                label-field="no_rekening" tag filterable
+                                                v-model:value="newData.sumber_dana"></n-select>
+                                                <div v-if="newData.sumber_dana === 'Lainnya'">
+                                                    <n-input placeholder="no rekening" v-model:value="newData.no_rek_sumber_dana"/>
+                                                    <n-input placeholder="atas nama" v-model:value="newData.nama_sumber_dana"/>
+                                                </div>
+                                        </div>
+                                    </n-form-item>
+                                    <n-form-item label="Rekening Tujuan" class="w-full">
+                                        <div>
+                                            <n-select :options="accounts" value-field="no_rekening"
+                                                label-field="no_rekening" tag filterable
+                                                v-model:value="newData.rekening_tujuan"></n-select>
+                                                <div v-if="newData.rekening_tujuan === 'Lainnya'">
+                                                    <n-input placeholder="no rekening" v-model:value="newData.no_rek_tujuan"/>
+                                                    <n-input placeholder="atas nama" v-model:value="newData.nama_rek_tujuan"/>
+                                                </div>
+                                        </div>
                                     </n-form-item>
 
                                 </div>
@@ -74,14 +92,13 @@
                                         <n-select :options="optPembagi" value-field="v" label-field="l" tag filterable
                                             v-model:value="newData.pembagi"></n-select>
                                     </n-form-item>
-                                </div>
-                                <div>
-                                    <n-form-item label="Tanggal Mulai">
+                                     <n-form-item label="Tanggal Mulai" class="w-full">
                                         <n-date-picker placeholder="Tanggal Lahir"
                                             v-model:formatted-value="newData.tgl_mulai" value-format="yyyy-MM-dd"
                                             format="dd-MM-yyyy" type="date" @update:value="handleTanggalMulai" />
                                     </n-form-item>
                                 </div>
+      
                                 <n-card embedded v-if="selectedSaving">
                                     <div class="grid grid-cols-1 md:grid-cols-4 ">
                                         <div v-for="(value, key) in selectedSaving" :key="key">
@@ -89,7 +106,7 @@
                                                 <div><strong class="capitalize">{{ formatKey(key) }}</strong></div>
                                                 <div>
                                                     <n-ellipsis style="max-width: 120px">{{ value ? value : 'N/A'
-                                                    }}</n-ellipsis>
+                                                        }}</n-ellipsis>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,6 +122,7 @@
                 </n-card>
             </n-space>
         </div>
+
         <n-modal v-model:show="modalState" :mask-closable="false">
             <n-card :segmented="true" class="w-3/4" title="Tambahkan Customer Baru" size="small">
                 <template #header-extra>
@@ -136,13 +154,38 @@ const newData = reactive({
     periode: null,
     nominal: null,
     sumber_dana: null,
+    no_rek_sumber_dana:null,
+    nama_sumber_dana: null,
+    rekening_tujuan: null,
+    no_rek_tujuan: null,
+    nama_rek_tujuan: null,
     sukuk_bunga: null,
     restitusi_pajak: null,
     rollover: null,
     pembagi: null,
     tgl_mulai: null
 })
-
+const getNoDepo = async () => {
+    selectedRekening.value = null;
+    isLoading.value = true;
+    const response = await useApi({
+        api: 'deposits',
+        method: 'GET',
+        token: localStorage.getItem('token')
+    });
+    if (!response.ok) {
+        message.error("error");
+        isLoading.value = false;
+    } else {
+        isLoading.value = false;
+        dataRekening.value = response.data;
+        selectOptions.value = response.data.map(row => ({
+            label: `${row.no_deposito} ${row.nama_pemilik}`,
+            value: row.no_deposito,
+            disabled: row.status === 'inactive'
+        }));
+    }
+}
 const year = new Date().getFullYear(); // Misalnya: 2025
 const prefix = `8${year}`; // Akan jadi '22025'
 const optNoRekening = Array.from({ length: 10000 }, (_, i) => {
@@ -237,7 +280,14 @@ const getAccountlist = async (e) => {
         isLoadingAccount.value = false;
     } else {
         isLoading.value = false;
-        accounts.value = response.data;
+        accounts.value = [
+            ...response.data,
+            {
+                no_rekening: 'Lainnya',
+                nama_pemilik: 'Lainnya'
+            }
+        ];
+
         isLoadingAccount.value = false;
     }
 }
