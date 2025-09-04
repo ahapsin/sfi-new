@@ -48,12 +48,12 @@
                                         <n-text> Bunga setiap bulan akan dibayarkan ke :
                                         </n-text>
                                         <n-text strong>{{ selectedRekening.no_rek_sumber_dana }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.nama_sumber_dana }}</n-text>
+                                        <n-text strong>{{ selectedRekening.nama_sumber_dana }}</n-text>
                                     </div>
                                     <div class="flex flex-col border mt-4 p-2 border-black">
                                         <n-text> Pada tanggal jatuh tempo, pokok akan dikreditkan ke :</n-text>
                                         <n-text strong>{{ selectedRekening.no_rek_tujuan }}</n-text>
-                                        <n-text strong>AC. {{ selectedRekening.nama_rek_tujuan }}</n-text>
+                                        <n-text strong>{{ selectedRekening.nama_rek_tujuan }}</n-text>
                                     </div>
                                 </div>
                                 <div class="w-full">
