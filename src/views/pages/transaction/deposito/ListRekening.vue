@@ -93,12 +93,20 @@ const columns = [
         key: "nama_pemilik"
     },
     {
-        title: "Alamat",
-        key: "alamat"
-    },
-    {
         title: "Nominal",
         key: "saldo"
+    },
+    {
+        title: "Bunga",
+        key: "bunga"
+    },
+    {
+        title: "Pajak",
+        key: "pajak"
+    },
+    {
+        title: "Bunga Setelah Pajak",
+        key: "net"
     },
 ]
 

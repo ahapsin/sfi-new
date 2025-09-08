@@ -9,9 +9,12 @@
                     </n-form-item>
                     <n-card v-if="selectedRekening" embedded title="Detail Bilyet" size="small" :segmented="true">
                         <template #header-extra>
-                            <n-button type="primary" @click="printBillyet">Cetak Billyet</n-button>
+                            <n-space>
+                                <n-button type="primary" @click="printBillyet">Cetak Billyet</n-button>
+                                <n-button type="primary" @click="printSnk">Cetak S&K</n-button>
+                            </n-space>
                         </template>
-                        <div class="border border-black p-4 bg-white" ref="billyetRef">
+                        <div class="border border-black p-4 bg-yellow-50 h-[13.5cm]" ref="billyetRef">
                             <div class="flex justify-between">
                                 <div class="flex gap-4">
                                     <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
@@ -37,7 +40,6 @@
                                     sebagai berikut:</n-text>
                             </div>
                             <div class="flex w-full pt-4 gap-4">
-
                                 <div class="w-1/3">
                                     <div class="flex flex-col border p-2 border-black">
                                         <n-text strong italic>Kepada Yth.</n-text>
@@ -71,7 +73,7 @@
                                         <tr>
                                             <td>Jangka Waktu</td>
                                             <td>:</td>
-                                            <td>{{ selectedRekening.tempo }} ( {{terbilang(selectedRekening.tempo)}} )
+                                            <td>{{ selectedRekening.tempo }} ( {{ terbilang(selectedRekening.tempo) }} )
                                                 bulan</td>
                                         </tr>
                                         <tr>
@@ -111,6 +113,129 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <n-divider>Halaman Belakang</n-divider>
+                        <div class="border border-black p-4 bg-yellow-50 h-[13.5cm]" ref="halBelakang">
+                            <div class="flex justify-center font-bold p-2 border-b border-black">SYARAT - SYARAT SIMPANAN BERJANGKA</div>
+                            <div class="flex gap-10 p-2 text-[10px]">
+                                <div>
+                                    <ol class="list-decimal list-inside space-y-2">
+                                        <li>
+                                            Simpanan Berjangka hanya dapat dibayar kembali pada tanggal jatuh tempo di
+                                            kantor KSP SAKURA
+                                            FINANSIAL INDONESIA,
+                                            dimana Simpanan Berjangka dibuka. Penarikan sebagian atau seluruhnya atas
+                                            jumlah Simpanan Berjangka
+                                            sebelum jatuh tempo tidak diperkenankan.
+                                        </li>
+                                        <li>
+                                            Perubahan nama anggota, tanda tangan dan lain-lain yang menyangkut data
+                                            keterangan yang pernah
+                                            diberikan kepada KSP SAKURA FINANSIAL INDONESIA
+                                            harus segera diberitahukan kepada koperasi secara tertulis.
+                                        </li>
+                                        <li>
+                                            Dalam hal Simpanan Berjangka dibukakan atas nama dua orang, maka:
+                                            <ol class="list-[lower-alpha] list-inside ml-5 space-y-1">
+                                                <li>
+                                                    Untuk Simpanan Berjangka dengan status “ATAU” serta “DAN / ATAU”
+                                                    apabila salah satu pihak
+                                                    meninggal dunia,
+                                                    pihak yang masih hidup atau ahli waris yang sah menurut hukum berhak
+                                                    menarik jumlah yang
+                                                    terdapat pada
+                                                    Bilyet Simpanan Berjangka beserta bunga pada tanggal jatuh tempo.
+                                                </li>
+                                                <li>
+                                                    Untuk Simpanan Berjangka dengan status “DAN” apabila salah satu
+                                                    pihak meninggal dunia, maka
+                                                    pihak ahli waris
+                                                    yang sah menurut hukum bersama pihak yang masih hidup berhak menarik
+                                                    jumlah yang terdapat
+                                                    pada Bilyet
+                                                    Simpanan Berjangka beserta bunga pada tanggal jatuh tempo. Koperasi
+                                                    akan memberikan sejumlah
+                                                    hasil,
+                                                    kecuali pihak ahli waris tersebut telah menyelesaikan
+                                                    persyaratan-persyaratan yang berlaku.
+                                                </li>
+                                            </ol>
+                                        </li>
+                                        <li>
+                                            Apabila Bilyet Simpanan Berjangka hilang atau dicuri, deposan harus segera
+                                            melaporkan kepada
+                                            Koperasi dengan
+                                            disertai surat keterangan dari kepolisian, disamping membuat pernyataan
+                                            secara tertulis atas segala
+                                            kemungkinan
+                                            yang timbul atas kehilangan Bilyet Simpanan Berjangka tersebut.
+                                        </li>
+                                        <li>
+                                            Bunga Simpanan Berjangka dibayar pada saat jatuh tempo bunga atau pada saat
+                                            jatuh tempo nominal
+                                            bilamana dihitung
+                                            dari tanggal valuta sampai tanggal jatuh tempo. Dengan tarif bunga sesuai
+                                            ketentuan berlaku.
+                                        </li>
+                                    </ol>
+
+                                </div>
+                                <div>
+                                    <ol start="6" class="list-decimal list-inside space-y-2">
+                                        <li>
+                                            Simpanan Berjangka tidak dapat dipindah tangankan. Pencairan Simpanan
+                                            Berjangka dan bunganya hanya
+                                            dapat dilakukan
+                                            oleh deposan sendiri atau kuasanya berdasarkan surat KUASA YANG SAH MENURUT
+                                            HUKUM DAN BERMETERAI
+                                            CUKUP.
+                                            Apabila deposan meninggal dunia, maka jumlah yang tertera dalam Bilyet
+                                            Simpanan Berjangka tersebut
+                                            beserta
+                                            bunganya akan dibayarkan kepada ahli warisnya yang sah menurut hukum.
+                                        </li>
+                                        <li>
+                                            Simpanan Berjangka dapat diperpanjang secara otomatis sesuai permintaan
+                                            deposan dengan tingkat suku
+                                            bunga yang
+                                            berlaku saat perpanjangan. Jika Simpanan Berjangka akan dicairkan / diubah
+                                            maka deposan wajib
+                                            memberitahukan
+                                            kepada kantor KOPERASI SAKURA FINANSIAL INDONESIA, yang menerbitkan Bilyet
+                                            Simpanan Berjangka
+                                            selambat-lambatnya
+                                            3 (tiga) hari kerja sebelum tanggal jatuh tempo nominal.
+                                        </li>
+                                        <li>
+                                            Bunga atas Simpanan Berjangka tidak akan diperhitungkan sudah tanggal jatuh
+                                            tempo nominal, kecuali
+                                            bila diperpanjang kembali.
+                                        </li>
+                                        <li>
+                                            Simpanan Berjangka ini hanya dapat dijaminkan untuk pinjaman yang diberikan
+                                            oleh KSP SAKURA
+                                            FINANSIAL INDONESIA dan
+                                            tidak dapat dijaminkan di koperasi atau pihak lain lainnya.
+                                        </li>
+                                        <li>
+                                            Selain ketentuan-ketentuan tersebut di atas, deposan menyatakan tunduk pada
+                                            semua ketentuan yang
+                                            berlaku pada
+                                            Koperasi baik yang sekarang ada maupun yang akan ada di kemudian hari.
+                                        </li>
+                                    </ol>
+                                    <p class="mt-4">
+                                        Pada saat pencairan Simpanan Berjangka, mohon dilakukan pencairan Simpanan
+                                        Berjangka ini, sebagai
+                                        berikut:
+                                    </p>
+
+                                    <p class="mt-2">
+                                        <strong>Tunai</strong><br>
+                                        _________________________
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -155,10 +280,18 @@ const halBarisAwal = ref({ hal: 1, baris: 1 })
 const halBarisAkhir = ref({ hal: 2, baris: 1 })
 
 const billyetRef = ref();
+const halBelakang=ref();
 const printBillyet = () => {
     const { handlePrint } = useVueToPrint({
         content: billyetRef,
         documentTitle: "Billyet",
+    });
+    handlePrint();
+}
+const printSnk = () => {
+    const { handlePrint } = useVueToPrint({
+        content: halBelakang,
+        documentTitle: "Halaman Belakang Syarat & Ketentuan",
     });
     handlePrint();
 }
