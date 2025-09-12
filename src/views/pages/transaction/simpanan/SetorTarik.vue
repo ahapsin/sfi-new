@@ -38,9 +38,9 @@
         <n-card class="w-5/6" title="Setoran Tunai" :segmented="true" size="small">
             <n-card embedded>
                 <div class="flex gap-4">
-                    <n-form-item label="Tanggal Valuta">
+                    <!-- <n-form-item label="Tanggal Valuta">
                         <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
-                    </n-form-item>
+                    </n-form-item> -->
                     <n-form-item label="Pilih Rekening" class="w-full">
                         <n-select filterable v-model:value="rekening" :options="selectOptions"
                             @update:value="handleUpdateValue" />
@@ -86,9 +86,9 @@
         <n-card class="w-5/6" title="Tarik Tunai" :segmented="true" size="small">
             <n-card embedded>
                 <div class="flex gap-4">
-                    <n-form-item label="Tanggal Valuta">
+                    <!-- <n-form-item label="Tanggal Valuta">
                         <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
-                    </n-form-item>
+                    </n-form-item> -->
                     <n-form-item label="Pilih Rekening" class="w-full">
                         <n-select filterable v-model:value="rekening" :options="selectOptions"
                             @update:value="handleUpdateValue" />
@@ -135,9 +135,7 @@
     </n-modal>
     <n-modal v-model:show="modalPinbuk">
         <n-card class="w-[80%]" title="Pindah Buku Antar Rekening" :segmented="true" size="small">
-            <n-form-item label="Tanggal Valuta">
-                <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
-            </n-form-item>
+            
             <div class="flex gap-4 items-center">
                 <n-card :segmented="true" embedded size="small" title="Rekening Debet">
                     <div class="flex gap-4">
@@ -246,9 +244,10 @@ const fetchData = async () => {
 }
 const postData = async (e) => {
     const response = await useApi({
-        url: 'http://localhost:3001/aktivitas',
+        api: 'transaction',
         method: 'POST',
-        data: e
+        data: e,
+        token: localStorage.getItem('token')
     });
     if (!response.ok) {
         message.error("error");
@@ -260,7 +259,11 @@ const postData = async (e) => {
 
 const fetchDataAktifitas = async () => {
     isLoading.value = true;
-    const response = await useApi({ url: 'http://localhost:3001/aktivitas' });
+    const response = await useApi({
+        api: 'transaction',
+        method: 'get',
+        token:localStorage.getItem('token')
+    });
     if (!response.ok) {
         message.error("error");
         isLoading.value = false;
@@ -286,17 +289,17 @@ const handleSaveSetor = async () => {
         tgl_transaksi: tgl_valuta.value,
         nomor_rekening: selectedRekening.value.no_rekening,
         atas_nama: selectedRekening.value.nama_pemilik,
-        sandi_transaksi: '1001',
-        type_transaksi: "kredit",
+        sandi_transaksi: 'setor',
         nominal: nominal.value,
         saldo: selectedRekening.value.saldo,
         keterangan: keterangan.value,
         operator: "DEB",
+        cust_code: selectedRekening.value.cust_code,
         buku: 1,
         hal: 1,
         baris: 1
     }
-    await postData(body);
+   await postData(body);
     await fetchDataAktifitas();
     modalSetor.value = false;
     modalPrint.value = true;
@@ -349,24 +352,19 @@ const columnsAktifitas = [
     {
         title: "Tgl Transaksi",
         key: "tgl_transaksi",
-        ellipsis: {
-            tooltip: true
-        },
-        render(row) {
-            return h("div", moment(row.tgl_transaksi).fromNow());
-        }
+        sort:'default'
     },
     {
         title: "No Rekening",
-        key: "nomor_rekening"
+        key: "no_rek"
     },
     {
         title: "Pemilik",
-        key: "atas_nama"
+        key: "pemilik"
     },
     {
         title: "Sandi",
-        key: "sandi_transaksi"
+        key: "tipe"
     },
     {
         title: "Nominal",
@@ -378,6 +376,10 @@ const columnsAktifitas = [
     {
         title: "Operator",
         key: "operator"
+    },
+    {
+        title: "Descr",
+        key: "ket"
     },
 ];
 

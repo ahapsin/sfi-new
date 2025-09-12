@@ -96,21 +96,9 @@ const columns = [
     },
     {
         title: "Saldo",
-        key: "saldo"
-    },
-    {
-        title: "Status",
-        key: "status",
+        key: "saldo",
         render(row) {
-            return h(
-                NTag,
-                {
-                    type: row.status === 'active' ? 'success' : 'error',
-                },
-                {
-                    default: () => row.status,
-                }
-            );
+            return h("div", row.saldo.toLocaleString())
         }
     },
 ]
