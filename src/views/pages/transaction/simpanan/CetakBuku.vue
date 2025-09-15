@@ -51,13 +51,13 @@
                                             <td style="width:0.9cm">&nbsp;</td>
                                             <td style="width:1.8cm">{{ moment(col.tgl_transaksi).format('MM-DD-YYYY') }}
                                             </td>
-                                            <td style="width:1cm">{{ col.sandi_transaksi }}</td>
-                                            <td style="width:3.5cm" align="right">{{ col.type_transaksi === 'debet' ?
+                                            <td style="width:1cm">{{ col.tipe.slice(0, 2) }}</td>
+                                            <td style="width:3.5cm" align="right">{{ col.tipe === 'DEBET' ?
                                                 col.nominal.toLocaleString() : null }}</td>
-                                            <td style="width:3.5cm" align="right">{{ col.type_transaksi === 'kredit' ?
+                                            <td style="width:3.5cm" align="right">{{ col.tip === 'CREDIT' ?
                                                 col.nominal.toLocaleString() : null }}</td>
                                             <td style="width:4cm" align="right">{{ col.saldo.toLocaleString() }}</td>
-                                            <td style="width:0.9cm" align="right">{{ col.operator }}</td>
+                                            <td style="width:0.9cm" align="right">{{ col.operator.slice(0, 2) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -118,7 +118,10 @@
 
     const fetchDataAktifitas = async (e) => {
         isLoading.value = true;
-        const response = await useApi({ url: `http://localhost:3001/aktivitas?nomor_rekening=${e}` });
+        const response = await useApi({ 
+            api: `transaction_by_acc/${e}`,
+            token: localStorage.getItem('token')
+        });
         if (!response.ok) {
             message.error("error");
             isLoading.value = false;
@@ -151,7 +154,7 @@
         },
         {
             title: "Sandi",
-            key: "sandi_transaksi"
+            key: "tipe"
         },
         {
             title: "Nominal",
