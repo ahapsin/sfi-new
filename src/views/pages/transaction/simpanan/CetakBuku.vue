@@ -54,7 +54,7 @@
                                             <td style="width:1cm">{{ col.tipe.slice(0, 2) }}</td>
                                             <td style="width:3.5cm" align="right">{{ col.tipe === 'DEBET' ?
                                                 col.nominal.toLocaleString() : null }}</td>
-                                            <td style="width:3.5cm" align="right">{{ col.tip === 'CREDIT' ?
+                                            <td style="width:3.5cm" align="right">{{ col.tipe === 'CREDIT' ?
                                                 col.nominal.toLocaleString() : null }}</td>
                                             <td style="width:4cm" align="right">{{ col.saldo.toLocaleString() }}</td>
                                             <td style="width:0.9cm" align="right">{{ col.operator.slice(0, 2) }}</td>
