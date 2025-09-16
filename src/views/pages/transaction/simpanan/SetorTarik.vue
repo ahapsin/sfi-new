@@ -5,13 +5,13 @@
                 <n-card :title="`Transaksi Simpanan`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-space>
-                            <n-button type="primary" @click="modalSetor = true">
+                            <n-button type="primary" @click="handleSetor">
                                 <template #icon>
                                     <v-icon name="bi-plus-lg" />
                                 </template>
                                 Setor
                             </n-button>
-                            <n-button type="warning" @click="modalTarik = true">
+                            <n-button type="warning" @click="handleTarik">
                                 <template #icon>
                                     <v-icon name="bi-plus-lg" />
                                 </template>
@@ -54,7 +54,7 @@
                                     <div><strong class="capitalize">{{ formatKey(key) }}</strong></div>
                                     <div>
                                         <n-ellipsis style="max-width: 120px">{{ value ? value : 'N/A'
-                                            }}</n-ellipsis>
+                                        }}</n-ellipsis>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
     </n-modal>
     <n-modal v-model:show="modalPinbuk">
         <n-card class="w-[80%]" title="Pindah Buku Antar Rekening" :segmented="true" size="small">
-            
+
             <div class="flex gap-4 items-center">
                 <n-card :segmented="true" embedded size="small" title="Rekening Debet">
                     <div class="flex gap-4">
@@ -151,7 +151,7 @@
                                     <div><strong class="capitalize">{{ formatKey(key) }}</strong></div>
                                     <div>
                                         <n-ellipsis style="max-width: 120px">{{ value ? value : 'N/A'
-                                            }}</n-ellipsis>
+                                        }}</n-ellipsis>
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +262,7 @@ const fetchDataAktifitas = async () => {
     const response = await useApi({
         api: 'transaction',
         method: 'get',
-        token:localStorage.getItem('token')
+        token: localStorage.getItem('token')
     });
     if (!response.ok) {
         message.error("error");
@@ -299,22 +299,23 @@ const handleSaveSetor = async () => {
         hal: 1,
         baris: 1
     }
-   await postData(body);
+    await postData(body);
     await fetchDataAktifitas();
     modalSetor.value = false;
-    modalPrint.value = true;
+    selectedRekening.value = null;
+    // modalPrint.value = true;
 }
 const handleSaveTarik = async () => {
     const body = {
         tgl_transaksi: tgl_valuta.value,
         nomor_rekening: selectedRekening.value.no_rekening,
         atas_nama: selectedRekening.value.nama_pemilik,
-        sandi_transaksi: '1002',
-        type_transaksi: "debet",
+        sandi_transaksi: 'tarik',
         nominal: nominal.value,
         saldo: selectedRekening.value.saldo,
         keterangan: keterangan.value,
         operator: "DEB",
+        cust_code: selectedRekening.value.cust_code,
         buku: 1,
         hal: 1,
         baris: 1
@@ -322,7 +323,7 @@ const handleSaveTarik = async () => {
     await postData(body);
     await fetchDataAktifitas();
     modalTarik.value = false;
-
+    selectedRekening.value = null;
 }
 const handleBatalSetor = () => {
     modalSetor.value = false;
@@ -331,9 +332,18 @@ const handleBatalSetor = () => {
     nominal.value = null;
     keterangan.value = null;
 }
-
 const handleBatalTarik = () => {
     modalTarik.value = false;
+    selectedRekening.value = null;
+    rekening.value = null;
+}
+const handleSetor = () => {
+    modalSetor.value = true;
+    selectedRekening.value = null;
+    rekening.value = null;
+}
+const handleTarik = () => {
+    modalTarik.value = true;
     selectedRekening.value = null;
     rekening.value = null;
 }
@@ -352,34 +362,40 @@ const columnsAktifitas = [
     {
         title: "Tgl Transaksi",
         key: "tgl_transaksi",
-        sort:'default'
+        sorter: "default",
     },
     {
         title: "No Rekening",
-        key: "no_rek"
+        key: "no_rek",
+        sorter: "default",
     },
     {
         title: "Pemilik",
-        key: "pemilik"
+        key: "pemilik",
+        sorter: "default",
     },
     {
         title: "Sandi",
-        key: "tipe"
+        key: "tipe",
+        sorter: "default",
     },
     {
         title: "Nominal",
         key: "nominal",
+        sorter: "default",
         render(row) {
             return h("div", row.nominal.toLocaleString())
         }
     },
     {
         title: "Operator",
-        key: "operator"
+        key: "operator",
+        sorter: "default",
     },
     {
         title: "Descr",
-        key: "ket"
+        key: "keterangan",
+        sorter: "default",
     },
 ];
 
