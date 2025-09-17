@@ -96,7 +96,7 @@
             <n-divider title-placement="left">Dokumen Identitas</n-divider>
             <n-space justify="space-between">
                 <n-space>
-                    <file-upload title="KTP" endpoint="upload_saving_doc" type="ktp" :idapp="modelCustomer.no_ktp" />
+                    <file-upload title="FOTO IDENTITAS" endpoint="upload_saving_doc" type="ktp" :idapp="modelCustomer.no_ktp" />
                 </n-space>
             </n-space>
         </n-form>
@@ -155,7 +155,7 @@ const optPendidikan = [
     label: v,
     value: v,
 }));
-const optJenisIdentitas = ["KTP"].map((v) => ({
+const optJenisIdentitas = ["KTP","PASPOR"].map((v) => ({
     label: v,
     value: v,
 }));
