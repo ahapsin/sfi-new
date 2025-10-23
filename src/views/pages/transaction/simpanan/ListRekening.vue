@@ -2,7 +2,7 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :title="`Data Rekening`" :segmented="true" size="small">
+                <n-card :class="`shadow-md`"  :title="`Data Rekening`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-button quaternary type="success" @click="handleBukaRekening">
                             <v-icon name="bi-folder-plus" scale="1.2" />

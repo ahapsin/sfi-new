@@ -2,7 +2,7 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :title="`Update Rekening`" :segmented="true" size="small">
+                <n-card :class="`shadow-md`"  :title="`Update Rekening`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-space class="!gap-1">
                             <!-- <div class="hidden md:flex">
@@ -50,7 +50,7 @@
             </n-space>
         </div>
         <div v-if="group" class="w-1/3">
-            <n-card size="small" title="Group Menu">
+            <n-card :class="`shadow-md`"  size="small" title="Group Menu">
                 <template #header-extra>
                     <n-space>
                         <n-button type="primary">

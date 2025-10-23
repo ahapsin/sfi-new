@@ -1,5 +1,5 @@
 <template>
-  <n-card>
+  <n-card :class="`shadow-md`" >
     <n-tabs type="line" animated>
       <n-tab-pane name="pelanggan" tab="Pelanggan">
         <div class="flex w-full gap-2">

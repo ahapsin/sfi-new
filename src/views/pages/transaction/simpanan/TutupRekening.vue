@@ -2,7 +2,7 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :title="`Transaksi Penutupan Rekening`" :segmented="true" size="small">
+                <n-card ::class="`shadow-md`"  :title="`Transaksi Penutupan Rekening`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-button type="primary" @click="handleAdd">
                             <template #icon>
@@ -20,8 +20,8 @@
         </div>
     </div>
     <n-modal v-model:show="modalRekening" :mask-closable="false">
-        <n-card class="w-2/4" title="Tutup Rekening" :segmented="true" size="small">
-            <n-card embedded>
+        <n-card :class="`shadow-md w-2/4`" title="Tutup Rekening" :segmented="true" size="small">
+            <n-card :class="`shadow-md`"  embedded>
                 <div class="flex gap-4">
                     <n-form-item label="Tanggal Valuta">
                         <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
@@ -32,7 +32,7 @@
                     </n-form-item>
                 </div>
                 <n-space vertical>
-                    <n-card v-if="selectedRekening">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekening">
                         <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
                             <div v-for="(value, key) in selectedRekening" :key="key">
                                <div class="flex flex-col">
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </n-card>
-                    <n-card>
+                    <n-card :class="`shadow-md`" >
                         <n-form>
                             <div>
                                 <n-form-item label="Keterangan" class="w-full">

@@ -1,5 +1,5 @@
 <template>
-    <n-space class="mb-4 bg-white p-2 rounded-lg items-center">
+    <n-space class="mb-4 bg-white border shadow-md p-2 rounded-lg items-center">
         <n-button @click="currentComponent = 'ListRekening'" quaternary :type="currentComponent === 'ListRekening' ? 'success' : 'default'">
             <v-icon name="bi-table" scale="1.2" />
         </n-button>

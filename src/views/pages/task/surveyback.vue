@@ -24,7 +24,7 @@
         :size="size"
         label-width="auto"
       >
-        <n-card
+        <n-card :class="`shadow-md`" 
           v-show="current == 1"
           title="Informasi Kredit"
           :segmented="{
@@ -178,7 +178,7 @@
             </n-form-item>
           </n-space>
         </n-card>
-        <n-card
+        <n-card :class="`shadow-md`" 
           v-show="current == 2"
           title="Data Pelanggan"
           :segmented="{
@@ -297,7 +297,7 @@
             />
           </div>
         </n-card>
-        <n-card
+        <n-card :class="`shadow-md`" 
           v-show="current == 3"
           class="flex"
           title="Data Jaminan"
@@ -394,7 +394,7 @@
             />
           </n-space>
         </n-card>
-        <n-card
+        <n-card :class="`shadow-md`" 
           v-show="current == 4"
           title="Data Survey"
           :segmented="{

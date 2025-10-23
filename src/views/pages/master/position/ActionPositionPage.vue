@@ -1,5 +1,5 @@
 <template>
-  <n-card
+  <n-card :class="`shadow-md`" 
     :segmented="{
       content: true,
       footer: 'soft',

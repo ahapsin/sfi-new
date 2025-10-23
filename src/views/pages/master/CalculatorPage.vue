@@ -1,5 +1,5 @@
 <template>
-    <n-card title="Master Biaya Admin">
+    <n-card :class="`shadow-md`"  title="Master Biaya Admin">
         <template #header-extra>
             <n-button type="primary" v-show="displayList" @click="() => { displayForm = true; displayList = false; }">
                 Tambah Skema

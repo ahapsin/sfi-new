@@ -1,8 +1,8 @@
 <template>
 
 
-    <n-card class="w-full" title="Pencairan Deposito" :segmented="true" size="small">
-        <n-card embedded>
+    <n-card ::class="`shadow-md`"  class="w-full" title="Pencairan Deposito" :segmented="true" size="small">
+        <n-card :class="`shadow-md`"  embedded>
             <div class="flex gap-4">
                 <n-form-item label="Tanggal Valuta">
                     <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
@@ -13,7 +13,7 @@
                 </n-form-item>
             </div>
             <n-space vertical>
-                <n-card v-if="selectedRekening">
+                <n-card :class="`shadow-md`"  v-if="selectedRekening">
                     <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
                         <div v-for="(value, key) in selectedRekening" :key="key">
                             <div class="flex flex-col">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </n-card>
-                <n-card>
+                <n-card :class="`shadow-md`" >
                     <n-form>
                         <div>
                             <n-form-item label="Keterangan" class="w-full">

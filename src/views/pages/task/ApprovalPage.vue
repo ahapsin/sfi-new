@@ -1,7 +1,7 @@
 <template>
     <div>
         <n-space vertical>
-            <n-card :title="`Tabel ${$route.name}`" class="bg-white" :segmented="true">
+            <n-card :class="`shadow-md`"  :title="`Tabel ${$route.name}`" class="bg-white" :segmented="true">
                 <template #header-extra>
                     <n-space class="!gap-1">
                         <div class="me-1">

@@ -1,5 +1,5 @@
 <template>
-    <n-card>
+    <n-card :class="`shadow-md`" >
         <template #header>Batal Order</template>
         <div>
             <n-data-table striped size="small" :row-key="(row) => row.loan_number" :columns="columns" :data="props.data"

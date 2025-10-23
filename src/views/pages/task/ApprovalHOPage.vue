@@ -1,7 +1,7 @@
 <template>
   <div class="pt-4">
     <n-space vertical>
-      <n-card :title="`Tabel Order`" class="bg-white" :segmented="true">
+      <n-card :class="`shadow-md`"  :title="`Tabel Order`" class="bg-white" :segmented="true">
         <template #header-extra>
           <n-space class="!gap-1">
             <div class="me-1">

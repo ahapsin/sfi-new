@@ -1,5 +1,5 @@
 <template>
-    <n-card>
+    <n-card :class="`shadow-md`" >
         Hi,<b>{{ me.me.nama }} 👋</b>
     </n-card>
 

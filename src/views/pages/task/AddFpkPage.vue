@@ -42,7 +42,7 @@
             }} (50%)
         </n-alert>
         <n-flex class="pt-2">
-            <n-card v-show="current == 1" title="Informasi pelanggan" :segmented="{
+            <n-card :class="`shadow-md`"  v-show="current == 1" title="Informasi pelanggan" :segmented="{
                 content: true,
                 footer: 'soft',
             }">
@@ -213,7 +213,7 @@
 </div> -->
                 </n-form>
             </n-card>
-            <n-card v-show="current == 2" title="Informasi Order" :segmented="{
+            <n-card :class="`shadow-md`"  v-show="current == 2" title="Informasi Order" :segmented="{
                 content: true,
                 footer: 'soft',
             }">
@@ -291,7 +291,7 @@
                             :allow-input="onlyAllowNumber" />
                     </n-form-item>
                     <n-divider title-placement="left"> Barang Taksasi</n-divider>
-                    <n-card embedded :segmented="true"
+                    <n-card :class="`shadow-md`"  embedded :segmented="true"
                         :title="`Jumlah Jaminan : ${jaminanStore.listJaminan.length}, Total Nilai Jaminan : ${sumJaminan.toLocaleString()}`">
                         <template #header-extra>
                             <div class="flex w-60 gap-2" v-show="!viewMode">
@@ -304,7 +304,7 @@
                                 </n-button>
                             </div>
                         </template>
-                        <n-card :segmented="true" class="my-2  ring-yellow-100 rounded-xl hover:ring-4 hover:ring-pr"
+                        <n-card :class="`shadow-md`"  :segmented="true" class="my-2  ring-yellow-100 rounded-xl hover:ring-4 hover:ring-pr"
                             v-for="(coll) in orderJaminan" :key="coll" :title="`${coll.type}`">
                             <template #header-extra>
                                 <div class="flex gap-2" v-if="!viewMode">
@@ -419,7 +419,7 @@
                         </n-card>
                     </n-card>
                     <n-modal v-model:show="showModal">
-                        <n-card class="md:w-1/2" closable @close="showModal = false" :segmented="true"
+                        <n-card :class="`shadow-md`"  class="md:w-1/2" closable @close="showModal = false" :segmented="true"
                             :title="`form ${jenisJaminan}`">
                             <component :is="JaminanKendaraan" v-if="jenisJaminan.toLowerCase() == 'kendaraan'"
                                 @childData="handleChildData" :def_data="dataProp" />
@@ -440,7 +440,7 @@
 
                 </n-form>
             </n-card>
-            <n-card v-show="current == 3" title="Informasi Tambahan" :segmented="{
+            <n-card :class="`shadow-md`"  v-show="current == 3" title="Informasi Tambahan" :segmented="{
                 content: true,
                 footer: 'soft',
             }">
@@ -603,7 +603,7 @@
                     </n-dynamic-input>
                 </n-form>
             </n-card>
-            <n-card v-show="current == 4" title="Data Ekstra" :segmented="{
+            <n-card :class="`shadow-md`"  v-show="current == 4" title="Data Ekstra" :segmented="{
                 content: true,
                 footer: 'soft',
             }" :loading="true">

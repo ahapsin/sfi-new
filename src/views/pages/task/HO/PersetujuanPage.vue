@@ -1,6 +1,6 @@
 <template>
 
-  <n-card>
+  <n-card :class="`shadow-md`" >
     <n-tabs @update:value="handleUpdateValue" class="card-tabs" default-value="jaminan" size="medium" animated
             pane-wrapper-style="margin: 0 -4px" type="card"
             pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;">

@@ -1,5 +1,5 @@
 <template>
-    <n-card size="small" title="Informasi Data Pelanggan" :segmented="{ content: true, footer: 'soft' }">
+    <n-card :class="`shadow-md`"  size="small" title="Informasi Data Pelanggan" :segmented="{ content: true, footer: 'soft' }">
         <n-form ref="formPelanggan" :label-placement="width <= 920 ? 'top' : 'top'"
             require-mark-placement="right-hanging" label-width="auto">
             <div class="flex w-full gap-2">

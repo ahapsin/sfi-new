@@ -1,7 +1,4 @@
 <template>
-        <div class="flex border rounded-lg p-2 mb-2 sticky sticky-top hover:ring-2 hover:ring-pr-100">
-                <account-avatar />
-        </div>
         <div>
                 <DisclosMenu :menus="listMenu.response">
                 </DisclosMenu>

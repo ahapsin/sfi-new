@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-space vertical>
-      <n-card title="Data Pelanggan" :segmented="{
+      <n-card :class="`shadow-md`"  title="Data Pelanggan" :segmented="{
                 content: true,
                 footer: 'soft',
             }">

@@ -2,9 +2,9 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :title="`Buka Rekening Baru`" :segmented="true" size="small">
+                <n-card :class="`shadow-md`"  :title="`Buka Rekening Baru`" :segmented="true" size="small">
                     <n-space vertical>
-                        <n-card embedded>
+                        <n-card :class="`shadow-md`"  embedded>
                             <n-form-item label="Pilih Customer" class="w-1/2">
                                 <n-select filterable v-model:value="customer" :options="dataCustomer"
                                     :render-label="renderLabel" label-field="nama" value-field="id"
@@ -17,7 +17,7 @@
                                     customer</n-button>
                             </n-form-item>
                         </n-card>
-                        <n-card v-if="selectedCustomer">
+                        <n-card :class="`shadow-md`"  v-if="selectedCustomer">
                             <div class="grid grid-cols-1 md:grid-cols-6 gap-4 bg-white">
                                 <div v-for="(value, key) in selectedCustomer" :key="key">
                                     <div class="flex">
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </n-card>
-                        <n-card>
+                        <n-card :class="`shadow-md`" >
                             <n-form>
                                 <div class="flex flex-col-3 gap-4">
                                     <n-form-item label="Nomor Rekening" class="w-full">
@@ -48,7 +48,7 @@
                                             v-model:value="setoran_awal" />
                                     </n-form-item>
                                 </div>
-                                <n-card embedded v-if="selectedSaving">
+                                <n-card :class="`shadow-md`"  embedded v-if="selectedSaving">
                                     <div class="grid grid-cols-1 md:grid-cols-4 ">
                                         <div v-for="(value, key) in selectedSaving" :key="key">
                                             <div class="flex flex-col">
@@ -69,7 +69,7 @@
             </n-space>
         </div>
         <n-modal v-model:show="modalState" :mask-closable="false">
-            <n-card :segmented="true" class="w-3/4" title="Tambahkan Customer Baru" size="small">
+            <n-card  :segmented="true" class="w-3/4 shadow-md" title="Tambahkan Customer Baru" size="small">
                 <template #header-extra>
                     <n-button circle quartenary type="error" @click="modalState = false" size="small">
                         <v-icon name="bi-x-lg"></v-icon>

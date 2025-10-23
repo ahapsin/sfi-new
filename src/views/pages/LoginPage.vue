@@ -4,7 +4,7 @@
   </SingleSideBar>
   <div v-else
        
-       :class="`h-screen flex items-center  justify-center max-h-screen  md:p-20`"
+       :class="`h-screen flex items-center  justify-center max-h-screen bg-gradient-to-t from-pr to-pr-200 md:p-20`"
   >
     <div
         class="flex w-full h-full md:w-2/5 md:h-full bg-white md:rounded-lg overflow-clip"
@@ -14,7 +14,7 @@
       </div>
      
     </div>
-    <div class="fixed bottom-0 bg-slate-50 w-full justify-center flex p-2 text-gray-400">los v. {{ appVersion }} @{{ appTitle }}</div>
+    <div class="fixed bottom-0 bg-pr-700 w-full justify-center flex p-2 text-pr-500">los v. {{ appVersion }} @{{ appTitle }}</div>
   </div>
   
 </template>

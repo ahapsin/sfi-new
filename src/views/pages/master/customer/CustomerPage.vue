@@ -1,6 +1,6 @@
 <template>
     <n-space vertical>
-        <n-card :title="`Tabel ${$route.name}`">
+        <n-card :class="`shadow-md`"  :title="`Tabel ${$route.name}`">
 
             <template #header-extra>
                 <n-space class="!gap-1">
@@ -59,7 +59,7 @@
     </n-space>
     <n-modal v-model:show="modalDetailCustomer">
 
-        <n-card class="w-4/6 max-h-[500px] overflow-x-auto ">
+        <n-card class="w-4/6 shadow-md max-h-[500px] overflow-x-auto ">
 
             <n-spin :show="spinPelanggan">
                 <n-tabs type="line" animated @before-leave="handleBeforeLeave">

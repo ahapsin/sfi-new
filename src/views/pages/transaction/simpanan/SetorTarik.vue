@@ -2,7 +2,7 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :title="`Transaksi Simpanan`" :segmented="true" size="small">
+                <n-card :class="`shadow-md`"  :title="`Transaksi Simpanan`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-space>
                             <n-button type="primary" @click="handleSetor">
@@ -35,8 +35,8 @@
         </div>
     </div>
     <n-modal v-model:show="modalSetor" :mask-closable="false">
-        <n-card class="w-5/6" title="Setoran Tunai" :segmented="true" size="small">
-            <n-card embedded>
+        <n-card   class="w-5/6 shadow-md" title="Setoran Tunai" :segmented="true" size="small">
+            <n-card :class="`shadow-md`"  embedded>
                 <div class="flex gap-4">
                     <!-- <n-form-item label="Tanggal Valuta">
                         <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
@@ -47,7 +47,7 @@
                     </n-form-item>
                 </div>
                 <n-space vertical>
-                    <n-card v-if="selectedRekening">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekening">
                         <div class="grid grid-cols-1 md:grid-cols-6  bg-white">
                             <div v-for="(value, key) in selectedRekening" :key="key">
                                 <div class="flex flex-col">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </n-card>
-                    <n-card>
+                    <n-card :class="`shadow-md`" >
                         <n-form>
                             <div>
                                 <n-form-item label="Nominal" class="w-full">
@@ -83,8 +83,8 @@
         </n-card>
     </n-modal>
     <n-modal v-model:show="modalTarik" :mask-closable="false">
-        <n-card class="w-5/6" title="Tarik Tunai" :segmented="true" size="small">
-            <n-card embedded>
+        <n-card  class="w-5/6 shadow-md" title="Tarik Tunai" :segmented="true" size="small">
+            <n-card :class="`shadow-md`"  embedded>
                 <div class="flex gap-4">
                     <!-- <n-form-item label="Tanggal Valuta">
                         <n-date-picker type="date" v-model:value="tgl_valuta"></n-date-picker>
@@ -95,7 +95,7 @@
                     </n-form-item>
                 </div>
                 <n-space vertical>
-                    <n-card v-if="selectedRekening">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekening">
                         <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
                             <div v-for="(value, key) in selectedRekening" :key="key">
                                 <div class="flex flex-col">
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                     </n-card>
-                    <n-card>
+                    <n-card :class="`shadow-md`" >
                         <n-form>
                             <div>
                                 <n-form-item label="Nominal" class="w-full">
@@ -134,17 +134,17 @@
             @close="modalPrint = false" />
     </n-modal>
     <n-modal v-model:show="modalPinbuk">
-        <n-card class="w-[80%]" title="Pindah Buku Antar Rekening" :segmented="true" size="small">
+        <n-card class="w-[80%] shadow-md" title="Pindah Buku Antar Rekening" :segmented="true" size="small">
 
             <div class="flex gap-4 items-center">
-                <n-card :segmented="true" embedded size="small" title="Rekening Debet">
+                <n-card :class="`shadow-md`"  :segmented="true" embedded size="small" title="Rekening Debet">
                     <div class="flex gap-4">
                         <n-form-item label="Pilih Rekening" class="w-full">
                             <n-select filterable v-model:value="rekeningDebet" :options="selectOptions"
                                 @update:value="handleUpdateValue" />
                         </n-form-item>
                     </div>
-                    <n-card v-if="selectedRekening">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekening">
                         <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
                             <div v-for="(value, key) in selectedRekening" :key="key">
                                 <div class="flex flex-col">
@@ -159,14 +159,14 @@
                     </n-card>
                 </n-card>
                 <v-icon name="bi-arrow-right" />
-                <n-card :segmented="true" embedded size="small" title="Rekening Kredit">
+                <n-card :class="`shadow-md`"  :segmented="true" embedded size="small" title="Rekening Kredit">
                     <div class="flex gap-4">
                         <n-form-item label="Pilih Rekening" class="w-full">
                             <n-select filterable v-model:value="rekeningKredit" :options="selectOptions"
                                 @update:value="handleUpdateValueKredit" />
                         </n-form-item>
                     </div>
-                    <n-card v-if="selectedRekeningKredit">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekeningKredit">
                         <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
                             <div v-for="(value, key) in selectedRekeningKredit" :key="key">
                                 <div class="flex flex-col">
@@ -180,7 +180,7 @@
                     </n-card>
                 </n-card>
             </div>
-            <n-card class="mt-4">
+            <n-card class="mt-4 shadow-md">
                 <n-form>
                     <div>
                         <n-form-item label="Nominal" class="w-full">

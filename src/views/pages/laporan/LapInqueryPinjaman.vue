@@ -1,14 +1,14 @@
 <template>
-  <n-card title="Inquery Piutang" :segmented="true">
+  <n-card :class="`shadow-md`"  title="Inquery Piutang" :segmented="true">
     <TabInqPinjaman :columns="columnsPinjaman" :data="dataInqPinjaman" :loading="loadInqPinjaman"
                     @cari="handleCariInqPinjaman" :available="inqView"/>
   </n-card>
   <n-modal v-model:show="modalDetail">
-    <n-card content-style="padding: 0;" class="w-11/12">
+    <n-card :class="`shadow-md`"  content-style="padding: 0;" class="w-11/12">
       <n-tabs type="line" :tabs-padding="20" pane-style="padding: 20px;" @before-leave="handleBeforeLeaveModal">
         <n-tab-pane name="Kartu Piutang">
           <n-spin v-if="spinAngsuran"/>
-          <n-card v-else>
+          <n-card :class="`shadow-md`"  v-else>
             <div ref="printKartuRef" class="p-4">
               <div
                   class="flex items-center gap-2 pb-2 justify-between border-b border-dashed border-black">

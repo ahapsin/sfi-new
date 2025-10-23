@@ -9,7 +9,7 @@
       <n-input placeholder="cari" size="large" v-model:value="searchBox" clearable/>
     </div>
     <div class="p-2 flex flex-col gap-2">
-      <n-card v-if="loadData">
+      <n-card :class="`shadow-md`"  v-if="loadData">
         <n-skeleton text :repeat="2"/>
         <n-skeleton text style="width: 60%"/>
       </n-card>
@@ -62,7 +62,7 @@
     </div>
   </div>
   <n-modal class="w-11/12" title="Upload Berkas Pencairan" v-model:show="showModal" :mask-closable="false">
-    <n-card :bordered="false" aria-modal="true">
+    <n-card :class="`shadow-md`"  :bordered="false" aria-modal="true">
       <n-grid :cols="1">
         <n-gi>
           <div class="flex">

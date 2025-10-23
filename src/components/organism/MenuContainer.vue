@@ -1,5 +1,5 @@
 <template>
-  <n-card>
+  <n-card :class="`shadow-md`" >
     <div v-if="menu.loading">
       <div class="flex flex-col gap-2">
         <n-skeleton height="10px" width="100px" round/>

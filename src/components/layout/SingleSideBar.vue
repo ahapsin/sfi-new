@@ -1,63 +1,63 @@
 <template>
   <n-layout class="h-screen">
-    <n-layout position="absolute" has-sider>
-      <n-layout-sider :width='200' :collapsed-width="0" :show-collapsed-content="false"
-        :collapsed="sideMenu.sideEffect ? true : false" 
-        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none" bordered>
-        <n-scrollbar>
-          <div class="flex sticky sticky-top top-0 bg-white z-50 p-2 gap-2">
-             <!-- <n-button circle text @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
+    <n-layout-header>
+      <n-page-header class="sticky shadow  top-0 z-50 backdrop-blur p-2 bg-gradient-to-l from-pr-100">
+        <template #title>
+          <n-space align="center">
+            <n-button circle quaternary @click="router.back()"
+              v-if="route.name !== 'landing' && route.name !== 'dashboard'" class="flex md:hidden">
+              <template #icon>
+                <n-icon>
+                  <back-icon />
+                </n-icon>
+              </template>
+            </n-button>
+            <n-button circle quaternary @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
               v-if="width > 450">
               <template #icon>
-                <v-icon name="bi-grid" v-if="sideMenu.sideEffect" />
-                <v-icon name="bi-grid-fill" v-else />
+                <v-icon name="bi-grid" v-if="sideMenu.sideEffect" class="text-pr" />
+                <v-icon name="bi-grid-fill" v-else class="text-pr"/>
               </template>
-            </n-button> -->
-            <img class="h-[36px] md:h-[36px]" :src="applogo" alt="logo_company" />
-              <div class="flex flex-col items-left justify-center">
-                <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
-                <span class="text-[10px]">v. {{ appVersion }}</span>
-              </div>
+            </n-button>
+            <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
+            <div class="flex flex-col items-left justify-center">
+              <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
+              <span class="text-[10px]">v. {{ appVersion }}</span>
+            </div>
+          </n-space>
+          <span class="hidden md:flex capitalize"></span>
+        </template>
+        <template #extra>
+          <div class="flex items-center">
+            <account-avatar />
           </div>
-          <div class="p-2">
-            <SideMenu />
-          </div>
+        </template>
+      </n-page-header>
+    </n-layout-header>
+    <n-layout position="absolute" style="top: 60px" has-sider>
+      <n-layout-sider :width='200' :collapsed-width="0" :show-collapsed-content="false"
+        :collapsed="sideMenu.sideEffect ? true : false" content-style="padding: 10px;"
+        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none bg-gradient-to-t from-pr-100">
+        <n-scrollbar>
+          <SideMenu />
         </n-scrollbar>
       </n-layout-sider>
-      <n-layout :class="`bg-pr-50`">
-        <div v-if="width < 678">
-          <div>
-            <div class="flex sticky sticky-top top-0 bg-white z-50 p-2 gap-2 justify-between px-6">
-             <!-- <n-button circle text @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
-              v-if="width > 450">
-              <template #icon>
-                <v-icon name="bi-grid" v-if="sideMenu.sideEffect" />
-                <v-icon name="bi-grid-fill" v-else />
-              </template>
-            </n-button> -->
-            <div class="flex">
-              <img class="h-[36px] md:h-[36px]" :src="applogo" alt="logo_company" />
-                <div class="flex flex-col items-left justify-center">
-                  <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
-                  <span class="text-[10px]">v. {{ appVersion }}</span>
-                </div>
-            </div>
-              <AccountAvatar/>
-          </div>
-          </div>
-        </div>
+      <n-layout :class="`bg-gradient-to-t from-pr-100`">
         <div class="p-0 md:p-4">
           <n-page-header @back="handleBack">
             <template #header>
-              <n-breadcrumb v-if="width > 480">
-                <n-breadcrumb-item @click="router.push('/')">DASHBOARD</n-breadcrumb-item>
-                <n-breadcrumb-item v-if="$route.name != 'landing'">{{ $route.name?.toUpperCase() }}</n-breadcrumb-item>
-              </n-breadcrumb>
+              <div class="border p-3 rounded-2xl bg-white shadow-md w-fit hidden md:flex">
+                <n-breadcrumb v-if="width > 480">
+                  <n-breadcrumb-item @click="router.push('/')">DASHBOARD</n-breadcrumb-item>
+                  <n-breadcrumb-item v-if="$route.name != 'landing'">{{ $route.name?.toUpperCase() }}</n-breadcrumb-item>
+                </n-breadcrumb>
+              </div>
             </template>
           </n-page-header>
           <RouterView />
           <slot />
         </div>
+
       </n-layout>
     </n-layout>
   </n-layout>
@@ -78,7 +78,6 @@ import { useRoute } from "vue-router";
 import pjson from '../../../package.json';
 import router from "../../router";
 import { useSidebar } from "../../stores/sidebar";
-import AccountAvatar from "../molecules/AccountAvatar.vue";
 
 const route = useRoute();
 const applogo = import.meta.env.VITE_APP_LOGO;
@@ -105,3 +104,8 @@ const widthScreen = () => {
 onMounted(() => widthScreen());
 </script>
 
+<style scoped>
+.sidebar {
+  @apply p-2 bg-white md:flex flex-col justify-between border-r hidden;
+}
+</style>

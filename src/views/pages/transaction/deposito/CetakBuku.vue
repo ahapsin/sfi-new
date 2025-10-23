@@ -2,12 +2,12 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card title="Cetak Bilyet" :segmented="true" size="small">
+                <n-card :class="`shadow-md`"  title="Cetak Bilyet" :segmented="true" size="small">
                     <n-form-item label="Pilih No Deposito" class="w-full">
                         <n-select filterable v-model:value="rekening" :options="selectOptions"
                             @update:value="handleUpdateValue" />
                     </n-form-item>
-                    <n-card v-if="selectedRekening" embedded title="Detail Bilyet" size="small" :segmented="true">
+                    <n-card :class="`shadow-md`"  v-if="selectedRekening" embedded title="Detail Bilyet" size="small" :segmented="true">
                         <template #header-extra>
                             <n-space>
                                 <n-button type="primary" @click="printBillyet">Cetak Billyet</n-button>

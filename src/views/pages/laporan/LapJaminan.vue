@@ -1,7 +1,7 @@
 <template>
     <div>
         <n-space vertical>
-            <n-card :title="`Laporan data Jaminan`" :segmented="true" size="small">
+            <n-card :class="`shadow-md`"  :title="`Laporan data Jaminan`" :segmented="true" size="small">
                 <template #header-extra>
 
                     <json-excel v-if="showData.length > 0" :data="showData"
@@ -44,7 +44,7 @@
             </n-card>
         </n-space>
         <n-modal v-model:show="showDetailModal" title="Modal">
-            <n-card class="w-2/3">
+            <n-card :class="`shadow-md`"  class="w-2/3">
                 <n-table :bordered="false" :single-line="false" size="small">
                     <thead>
                         <tr>
