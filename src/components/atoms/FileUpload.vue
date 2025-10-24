@@ -26,7 +26,7 @@
         <n-image :src="props.def_value" class="h-20 w-20 min-w-20 rounded-xl" object-fit="fit" />
       </div>
       <div v-else>
-        <n-image src="https://www.shorekids.co.nz/wp-content/uploads/2014/08/image-placeholder.jpg"
+        <n-image src="https://res.cloudinary.com/dfjruncxv/image/upload/v1761270964/placeholder_sfi_fohlth.png"
           class="h-20 w-20 min-w-20 rounded-xl border-red-500" />
       </div>
     </div>

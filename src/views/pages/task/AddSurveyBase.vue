@@ -1,7 +1,7 @@
 <template>
     <div>
         <n-scrollbar x-scrollable>
-            <n-space class="bg-sc-50 border rounded-xl p-4 mb-2">
+            <n-space class="border rounded-xl p-4 mb-2 shadow-md">
                 <n-steps :current="current" v-model:current="current" :status="currentStatus">
                     <n-step title="Informasi Order" :status="statusInformasiOrder" />
                     <n-step title="Data Pelanggan" :status="statusDataPelanggan" />
@@ -16,7 +16,7 @@
                 }}</b> > Nilai Jaminan {{ (sumJaminan / 2).toLocaleString() }}
             (50%)
         </n-alert>
-        <n-card :class="`shadow-md`"  :bordered="true" :title="`${current}. ${steps[current - 1]}`" :segmented="{
+        <n-card :class="`shadow-md`" size="small" :bordered="true" :title="`${current}. ${steps[current - 1]}`" :segmented="{
             content: true,
         }">
             <!-- container 1 -->
@@ -501,7 +501,7 @@ const tujuanKredit = ["KONSUMSI", "INVESTASI"].map((v) => ({
     label: v,
     value: v,
 }));
-const jenisAngsuran = ["BULANAN"].map((v) => ({
+const jenisAngsuran = ["BULANAN","REKENING KORAN"].map((v) => ({
     label: v,
     value: v.toLowerCase(),
 }));
