@@ -40,7 +40,7 @@
                                     sebagai berikut:</n-text>
                             </div>
                             <div class="flex w-full pt-4 gap-4">
-                                <div class="w-2/3">
+                                <div class="w-1/3">
                                     <div class="flex flex-col border p-2 border-black">
                                         <n-text strong italic>Kepada Yth.</n-text>
                                         <n-text strong>{{ selectedRekening.nama_nasabah }}</n-text>

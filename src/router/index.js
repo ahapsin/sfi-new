@@ -67,6 +67,12 @@ const routes = [
           import("../views/pages/transaction/rek_koran/rekKoranLayout.vue"),
       },
       {
+        path: "kredit",
+        name: "kredit",
+        component: () =>
+          import("../views/pages/transaction/kredit/kreditLayout.vue"),
+      },
+      {
         path: "payment",
         name: "pembayaran",
         component: () => import("../views/pages/transaction/paymentPage.vue"),
