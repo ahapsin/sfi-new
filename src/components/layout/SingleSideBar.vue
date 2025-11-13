@@ -1,7 +1,7 @@
 <template>
   <n-layout class="h-screen">
     <n-layout-header>
-      <n-page-header class="sticky shadow  top-0 z-50 backdrop-blur p-2 bg-gradient-to-l from-pr-100">
+      <n-page-header class="sticky shadow  top-0 z-50 backdrop-blur p-2 ">
         <template #title>
           <n-space align="center">
             <n-button circle quaternary @click="router.back()"
@@ -13,14 +13,14 @@
               </template>
             </n-button>
             <n-button circle quaternary @click="sideMenu.sideEffect = !sideMenu.sideEffect" color="#424242"
-              v-if="width > 450">
+             >
               <template #icon>
                 <v-icon name="bi-grid" v-if="sideMenu.sideEffect" class="text-pr" />
                 <v-icon name="bi-grid-fill" v-else class="text-pr"/>
               </template>
             </n-button>
-            <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
-            <div class="flex flex-col items-left justify-center">
+            <img class="h-6 md:h-6" :src="applogo" alt="logo_company" />
+            <div class="flex flex-col items-left justify-center"  v-if="width > 450">
               <n-ellipsis style="max-width: 150px">{{ apptitle }}</n-ellipsis>
               <span class="text-[10px]">v. {{ appVersion }}</span>
             </div>
@@ -37,21 +37,16 @@
     <n-layout position="absolute" style="top: 60px" has-sider>
       <n-layout-sider :width='200' :collapsed-width="0" :show-collapsed-content="false"
         :collapsed="sideMenu.sideEffect ? true : false" content-style="padding: 10px;"
-        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none bg-gradient-to-t from-pr-100">
+        class="absolute md:relative h-full z-20 shadow-xl md:shadow-none bg-gradient-to-t from-pr-50 from-5%">
         <n-scrollbar>
           <SideMenu />
         </n-scrollbar>
       </n-layout-sider>
-      <n-layout :class="`bg-gradient-to-t from-pr-100`">
-        <div class="p-0 md:p-4">
+      <n-layout :class="`bg-gradient-to-t from-pr-50 from-5%`">
+        <div class="p-4 md:p-4">
           <n-page-header @back="handleBack">
             <template #header>
-              <div class="border p-1 rounded-lg bg-white shadow-md w-fit hidden md:flex">
-                <n-breadcrumb v-if="width > 480">
-                  <n-breadcrumb-item @click="router.push('/')">DASHBOARD</n-breadcrumb-item>
-                  <n-breadcrumb-item v-if="$route.name != 'landing'">{{ $route.name?.toUpperCase() }}</n-breadcrumb-item>
-                </n-breadcrumb>
-              </div>
+              <BreadCrumb/>
             </template>
           </n-page-header>
           <RouterView />
@@ -78,6 +73,7 @@ import { useRoute } from "vue-router";
 import pjson from '../../../package.json';
 import router from "../../router";
 import { useSidebar } from "../../stores/sidebar";
+import BreadCrumb from "./BreadCrumb.vue";
 
 const route = useRoute();
 const applogo = import.meta.env.VITE_APP_LOGO;

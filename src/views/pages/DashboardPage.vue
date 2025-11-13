@@ -3,7 +3,7 @@
         Hi,<b>{{ me.me.nama }} 👋</b>
     </n-card>
 
-  <MenuContainer class="mt-2"/>
+  <MenuContainer class="mt-2 flex md:hidden"/>
 <n-scrollbar x-scrollable class="h-fit ">
     <div class="grid grid-flow-col md:grid-cols-3 gap-2 mt-2">
         <OrderBoard v-if="findAccessMenu('Order')" class="w-screen md:w-full shadow"/>

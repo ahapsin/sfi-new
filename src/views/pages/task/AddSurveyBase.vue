@@ -12,13 +12,14 @@
         </n-scrollbar>
         <!-- card -->
         <n-alert type="warning" v-if="sumJaminan != 0 && order.plafond > sumJaminan / 2">Nilai Plafon <b>{{
-                order.plafond.toLocaleString()
+            order.plafond.toLocaleString()
                 }}</b> > Nilai Jaminan {{ (sumJaminan / 2).toLocaleString() }}
             (50%)
         </n-alert>
-        <n-card :class="`shadow-md`" size="small" :bordered="true" :title="`${current}. ${steps[current - 1]}`" :segmented="{
-            content: true,
-        }">
+        <n-card :class="`shadow-md`" size="small" :bordered="true" :title="`${current}. ${steps[current - 1]}`"
+            :segmented="{
+                content: true,
+            }">
             <!-- container 1 -->
             <div v-show="current == 1">
                 <n-form ref="formOrder" :model="order" :rules="rulesOrder" require-mark-placement="right-hanging"
@@ -30,7 +31,7 @@
                         </n-form-item>
                         <n-form-item label="Jenis Angsuran" path="jenis_angsuran" class="w-full">
                             <n-select filterable placeholder="Jenis Angsuran" :options="jenisAngsuran"
-                                v-model:value="order.jenis_angsuran" :on-update:value="handleTipe"
+                                v-model:value="order.jenis_angsuran" 
                                 :disabled="order.plafond != 0 ? false : true" />
                         </n-form-item>
                     </div>
@@ -139,7 +140,7 @@
             </div>
             <div v-show="current === 3">
                 <n-alert type="error" v-if="statusDataJaminan === 'error'">minimal memiliki 1 jaminan</n-alert>
-                <n-card :class="`shadow-md`"  embedded :segmented="true"
+                <n-card :class="`shadow-md`" embedded :segmented="true"
                     :title="`Jumlah Jaminan : ${jaminanStore.listJaminan.length}, Total Nilai : ${sumJaminan.toLocaleString('US')}`">
                     <div class=" flex w-60 gap-2" v-if="!props.viewMode">
                         <n-select v-model:value="jenisJaminan" :options="optJaminan" placeholder="jenis jaminan"
@@ -150,7 +151,7 @@
                             </n-icon>
                         </n-button>
                     </div>
-                    <n-card :class="`shadow-md`"  :segmented="true" class="my-2 bg-white rounded-xl border hover:shadow"
+                    <n-card :class="`shadow-md`" :segmented="true" class="my-2 bg-white rounded-xl border hover:shadow"
                         v-for="(coll) in orderJaminan" :key="coll" :title="coll.type">
                         <template #header-extra v-if="!props.viewMode">
                             <div class="flex gap-2">
@@ -185,8 +186,8 @@
                                             :label="item.toUpperCase()">
                                             <b>{{
                                                 item === 'nilai' ? coll.atr[item].toLocaleString('US') :
-                                                coll.atr[item] ? coll.atr[item] : '--'
-                                                }}</b>
+                                                    coll.atr[item] ? coll.atr[item] : '--'
+                                            }}</b>
                                         </n-descriptions-item>
                                     </n-descriptions>
                                     <n-descriptions v-if="coll.type === 'sertifikat'"
@@ -196,8 +197,8 @@
                                             :label="item.toUpperCase()">
                                             <b>{{
                                                 item === 'nilai' ? coll.atr[item].toLocaleString('US') :
-                                                coll.atr[item] ? coll.atr[item] : '--'
-                                                }}</b>
+                                                    coll.atr[item] ? coll.atr[item] : '--'
+                                            }}</b>
                                         </n-descriptions-item>
                                     </n-descriptions>
                                 </div>
@@ -254,7 +255,7 @@
                 </n-card>
             </div>
             <n-modal v-model:show="showModal">
-                <n-card :class="`shadow-md`"  class="md:w-1/2" closable @close="showModal = false" :segmented="true"
+                <n-card :class="`shadow-md`" class="md:w-1/2" closable @close="showModal = false" :segmented="true"
                     :title="`form ${jenisJaminan}`">
                     <component :is="JaminanKendaraan" v-if="jenisJaminan.toLowerCase() == 'kendaraan'"
                         @childData="handleChildData" :def_data="dataProp" />
@@ -337,8 +338,8 @@
                     </n-form-item>
                     <n-divider title-placement="left"> Dokumen Pendukung</n-divider>
                     <file-upload :def_preview="true" title="dokumen pendukung" endpoint="image_upload_prospect"
-                        type="other" :idapp="dynamicForm.id" :view-mode="props.viewMode"
-                        :data_multi="dok_pendukung" :multi="true" />
+                        type="other" :idapp="dynamicForm.id" :view-mode="props.viewMode" :data_multi="dok_pendukung"
+                        :multi="true" />
                 </n-form>
             </div>
             <template #action>
@@ -501,9 +502,9 @@ const tujuanKredit = ["KONSUMSI", "INVESTASI"].map((v) => ({
     label: v,
     value: v,
 }));
-const jenisAngsuran = ["BULANAN","REKENING KORAN"].map((v) => ({
-    label: v,
-    value: v.toLowerCase(),
+const jenisAngsuran = ["BULANAN", "REKENING KORAN"].map((v) => ({
+  label: v,
+  value: v.toLowerCase().replace(/\s+/g, "_"),
 }));
 const optKategori = ["BARU", "RO"].map((v) => ({
     label: v,
@@ -539,8 +540,7 @@ const order = reactive({
     bunga: 0,
     bunga_tahunan: computed(() => (parseInt(order.bunga) * 12).toFixed(2)),
     angsuran: computed(() => (Math.ceil(Math.round((order.plafond * order.bunga / 100) * order.tenor + order.plafond) / order.tenor / 1000) * 1000)),
-
-    jenis_angsuran: "bulanan",
+    jenis_angsuran: null,
 });
 const initPelanggan = {
     no_kk: "",

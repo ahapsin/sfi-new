@@ -4,17 +4,17 @@
   </SingleSideBar>
   <div v-else
        
-       :class="`h-screen flex items-center  justify-center max-h-screen bg-gradient-to-t from-pr to-pr-200 md:p-20`"
+       :class="`h-screen flex items-center  justify-center max-h-screen bg-gradient-to-t from-pr-50 md:p-20`"
   >
     <div
-        class="flex w-full h-full md:w-2/5 md:h-full bg-white md:rounded-lg overflow-clip"
+        class="flex w-full h-full md:w-2/5 md:h-full bg-white md:rounded-lg overflow-clip shadow-md border"
     >
-      <div class="items-center flex w-full p-8 md:p-10 h-full">
+      <div class="items-center flex w-full p-8 md:p-10 h-full ">
         <LoginForm/>
       </div>
      
     </div>
-    <div class="fixed bottom-0 bg-pr-700 w-full justify-center flex p-2 text-pr-500">los v. {{ appVersion }} @{{ appTitle }}</div>
+    <div class="fixed bottom-0 bg-pr-100 w-full justify-center flex p-2 text-pr">los v. {{ appVersion }} @{{ appTitle }}</div>
   </div>
   
 </template>

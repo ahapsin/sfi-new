@@ -78,6 +78,18 @@ const routes = [
         component: () => import("../views/pages/transaction/paymentPage.vue"),
       },
       {
+        path: "topup_rk",
+        name: "Topup Rekening Koran",
+        meta: { breadcrumb: "Topup Rekening Koran" },
+        component: () => import("../views/pages/transaction/rk/topupPage.vue"),
+      },
+      {
+        path: "add_topup_rk",
+        name: "add_topup_rk",
+        meta: { breadcrumb: "Add Topup Rekening Koran" },
+        component: () => import("../views/pages/transaction/rk/AddTopUpPage.vue"),
+      },
+      {
         path: "addpayment",
         name: "tambah penerimaan",
         component: () => import("../views/pages/transaction/cashInPage.vue"),
@@ -213,6 +225,7 @@ const routes = [
       {
         path: "new-survey",
         name: "tambah survey",
+        meta:{breadcrumb:'Survey Baru'},
         component: () => import("../views/pages/task/AddSurveyPage.vue"),
       },
     ],
