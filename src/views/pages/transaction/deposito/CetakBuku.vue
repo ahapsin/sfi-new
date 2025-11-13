@@ -104,8 +104,8 @@
                                         <div class="h-[2cm]"></div>
                                         <div class="flex justify-around">
                                             <div>
-                                                <n-text underline strong class="block">ARIEF BUDI AWAN</n-text>
-                                                <n-text class="text-[12px]" strong>Branch Manager</n-text>
+                                                <n-text underline strong class="block">DEVIN CAHYANI</n-text>
+                                                <n-text class="text-[12px]" strong>Manager Operasional</n-text>
                                             </div>
                                             <div>
                                                 <n-text underline strong class="block">LYDIA MASEHI</n-text>
