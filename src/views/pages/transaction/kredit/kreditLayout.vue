@@ -49,7 +49,6 @@ import BayarSebagian from "./BayarSebagian.vue";
 import TarikSebagian from "./TarikSebagian.vue";
 import TutupRekening from "./TutupRekening.vue";
 import UpdateRekening from "./UpdateRekening.vue";
-import Menubar from "../../../../components/molecules/Menubar.vue";
 
 const currentComponent = ref('ListRekening');
 const komponenMap = {
