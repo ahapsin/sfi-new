@@ -12,12 +12,16 @@
             Transaksi
         </n-button> -->
      
-        <n-button quaternary type="primary" @click="currentComponent = 'BayarSebagian'">
-            <v-icon name="bi-cash-stack" scale="1.2" />
+        <n-button quaternary @click="currentComponent = 'BayarSebagian'">
+            <template #icon>
+                <v-icon name="bi-cash-stack" scale="1.2" />
+            </template>
             Bayar Sebagian
         </n-button>
-        <n-button quaternary type="success" @click="currentComponent = 'TarikSebagian'">
-            <v-icon name="bi-credit-card" scale="1.2" />
+        <n-button quaternary @click="currentComponent = 'TarikSebagian'">
+            <template #icon>
+                <v-icon name="bi-credit-card" scale="1.2" />
+            </template>
             Tarik Sebagian
         </n-button>
 

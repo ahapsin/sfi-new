@@ -63,6 +63,7 @@ const routes = [
       {
         path: "rek_koran",
         name: "rekening koran",
+        meta:{breadcrumb:'Rekening Koran'},
         component: () =>
           import("../views/pages/transaction/rek_koran/rekKoranLayout.vue"),
       },

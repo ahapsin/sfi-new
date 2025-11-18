@@ -2,8 +2,24 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :class="`shadow-md`"  :title="`Data Rekening Koran`" :segmented="true" size="small">
-                    
+                <n-card :class="`shadow-md`" :title="`Data Rekening Koran`" :segmented="true" size="small">
+                    <template #header-extra>
+                        <div class="flex gap-2">
+                            <n-input v-model:value="search" size="small">
+                                <template #prefix>
+                                    <v-icon name="bi-search" />
+                                </template>
+                            </n-input>
+                            <json-excel :data="showData" name="Data Barang">
+                                <n-button size="small" secondary type="success">
+                                    <template #icon>
+                                        <v-icon name="bi-download" />
+                                    </template>
+                                    export
+                                </n-button>
+                            </json-excel>
+                        </div>
+                    </template>
                     <n-space vertical :size="12">
                         <n-data-table size="small" :columns="columns" :data="data" :pagination="pagination"
                             :loading="isLoading" />
@@ -26,15 +42,15 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useApi } from '../../../../helpers/axios';
-import { NTag, useMessage } from 'naive-ui';
+import { useMessage } from 'naive-ui';
 import BukaRekening from "./BukaRekening.vue";
 import TutupRekening from './TutupRekening.vue';
-
-
+import { useSearch } from '../../../../helpers/searchObject';
 
 const data = ref([]);
 const isLoading = ref(false);
 const message = useMessage();
+const search = ref();
 
 const modalBukaRekening = ref(false);
 const modalTutupRekening = ref(false);
@@ -61,7 +77,7 @@ const handleTutupRekening = () => {
 const fetchData = async () => {
     isLoading.value = true;
     const response = await useApi({
-        api: 'deposits',
+        api: 'rekening_koran',
         method: 'GET',
         token: localStorage.getItem('token')
     });
@@ -76,30 +92,31 @@ const fetchData = async () => {
 
 const columns = [
     {
-        title: "No Deposito",
-        key: "no_deposito"
+        title: "No Rekening",
+        key: "loan_number"
     },
     {
         title: "Atas Nama",
-        key: "nama_pemilik"
+        key: "nama"
     },
     {
-        title: "Nominal",
-        key: "saldo"
+        title: "Nilai Pinjaman",
+        key: "nilai_pinjaman",
+        render(row) {
+            return h("div", row.nilai_pinjaman?.toLocaleString());
+        }
     },
     {
-        title: "Bunga",
-        key: "bunga"
+        title: "Sisa",
+        key: "sisa"
     },
     {
-        title: "Pajak",
-        key: "pajak"
-    },
-    {
-        title: "Bunga Setelah Pajak",
-        key: "net"
+        title: "Tunggakan",
+        key: "tunggakan"
     },
 ]
-
+const showData = computed(() => {
+    return useSearch(data.value, search.value);
+});
 onMounted(() => fetchData());
 </script>
