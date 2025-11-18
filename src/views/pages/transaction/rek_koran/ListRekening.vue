@@ -94,11 +94,13 @@ const fetchData = async () => {
 const columns = [
     {
         title: "No Rekening",
-        key: "loan_number"
+        key: "loan_number",
+         sorter: "default"
     },
     {
         title: "Atas Nama",
-        key: "nama"
+        key: "nama",
+         sorter: "default"
     },
     {
         title: "Nilai Pinjaman",

@@ -2,7 +2,7 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :class="`shadow-md`" :title="`Transaksi Penarikan Sebagian`" :segmented="true" size="small">
+                <n-card :class="`shadow-md`" :title="`Transaksi Pembayaran Sebagian`" :segmented="true" size="small">
                     <template #header-extra>
                         <n-space>
                             <div class="flex gap-2">
@@ -80,15 +80,18 @@ const handleAdd = () => {
 const columns = [
     {
         title: "Tanggal",
-        key: "tgl_transaksi"
+        key: "tgl_transaksi",
+        sorter: "default"
     },
     {
         title: "No Rekening",
-        key: "no_fasilitas"
+        key: "no_fasilitas",
+        sorter: "default"
     },
     {
         title: "Atas Nama",
-        key: "nama"
+        key: "nama",
+        sorter: "default"
     },
     {
         title: "Nominal Bayar",
