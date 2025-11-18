@@ -25,7 +25,7 @@
                                 <template #icon>
                                     <v-icon name="bi-plus-lg" />
                                 </template>
-                                Bayar Baru
+                                Tarik Baru
                             </n-button>
                         </n-space>
                     </template>
