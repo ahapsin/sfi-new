@@ -83,7 +83,10 @@
                         <tr>
                             <td>Tunggakan</td>
                             <td align="right">{{ formatter.format(pelunasan.TUNGGAKKAN) }}</td>
-
+                        </tr>
+                        <tr>
+                            <td><n-text class="text-pr font-bold">Limit Top Up</n-text></td>
+                            <td align="right" class="text-pr"><n-text class="text-pr font-bold">{{ formatter.format(pelunasan.NILAI_PEMBAYARAN) }}</n-text></td>
                         </tr>
                     </tbody>
                 </n-table>
@@ -120,7 +123,7 @@
             type="bukti_transfer" :idapp="pageData.uid" @fallback="handleResBack" />
     </n-modal>
     <n-modal v-model:show="modalProsesPayment" :mask-closable="false">
-        <n-card class="`shadow-md`" :class="width > 850 ? 'w-1/2' : 'w-fit'">
+        <n-card class="shadow-md w-1/2">
             <div class="flex items-center gap-4" v-if="loadProses">
                 <n-spin size="small" />
                 <n-text>memproses pelunasan</n-text>
@@ -143,7 +146,7 @@
 
                             </div>
                             <div class="text-md font-bold justify-center pt-4 md:flex"
-                                :class="width > 850 ? 'flex' : 'hidden'">KWITANSI PELUNASAN
+                                :class="width > 850 ? 'flex' : 'hidden'">KWITANSI PENARIKAN
                             </div>
                             <div class="flex justify-between border-b border-dashed border-black"
                                 :class="width > 850 ? 'flex-row' : 'flex-col'">
@@ -151,19 +154,19 @@
                                     <small class="text-reg">No Transaksi : </small>
                                     <n-text strong class="text-lg font-bold"> {{
                                         responseProsesPayment.res.no_transaksi
-                                        }}
+                                    }}
                                     </n-text>
                                     <small class="text-reg">No Pelanggan : </small>
                                     <n-text strong class="text-lg font-bold"> {{
                                         responseProsesPayment.res.cust_code
-                                        }}
+                                    }}
                                     </n-text>
                                 </div>
                                 <div class="flex flex-col py-4">
                                     <small class="text-reg">Terima dari (No Kontrak)</small>
                                     <n-text strong class="text-lg font-bold"> {{
                                         responseProsesPayment.res.nama
-                                        }}
+                                    }}
                                     </n-text>
                                     <small class="text-lg">{{ responseProsesPayment.res.no_fasilitas }}</small>
                                 </div>
@@ -174,89 +177,37 @@
                                     <small class="text-reg">Tanggal & Waktu</small>
                                     <n-text strong class="text-md">{{
                                         responseProsesPayment.res.tgl_transaksi
-                                        }}
+                                    }}
                                     </n-text>
                                 </div>
+                               
+                               
                                 <div class="flex flex-col">
-                                    <small class="text-reg">Angsuran</small>
-                                    <n-text strong class="text-md">
-                                        {{ responseProsesPayment.res.installment }}
-                                    </n-text>
+                                    <small class="text-reg">Nominal</small>
+                                    <n-text strong class="text-md"> {{ responseProsesPayment.res.jumlah_uang?.toLocaleString() }}</n-text>
                                 </div>
+                               
                                 <div class="flex flex-col">
-                                    <small class="text-reg">Pembulatan</small>
-                                    <n-text strong class="text-md"> {{ responseProsesPayment.res.pembulatan }}</n-text>
-                                </div>
-                                <div class="flex flex-col">
-                                    <small class="text-reg">Jumlah Uang</small>
-                                    <n-text strong class="text-md"> {{ responseProsesPayment.res.jumlah_uang }}</n-text>
-                                </div>
-                                <div class="flex flex-col">
-                                    <small class="text-reg">Kembalian</small>
-                                    <td>
-                                        <n-text strong class="text-md"> {{
-                                            responseProsesPayment.res.kembalian
-                                            }}
-                                        </n-text>
-                                    </td>
-                                </div>
-                                <div class="flex flex-col">
-                                    <small class="text-reg">Metode Pembayaran</small>
+                                    <small class="text-reg">Keterangan</small>
                                     <n-text strong class="text-md"> {{
-                                        responseProsesPayment.res.payment_method
-                                        }}
+                                        responseProsesPayment.res.keterangan
+                                    }}
                                     </n-text>
                                 </div>
                             </div>
-                        </div>
-                        <div class="px-3">
-                            <table width="100%" class="border border-black">
-                                <tr>
-                                    <th class="border border-black">Ke</th>
-                                    <th class="border border-black">Angsuran</th>
-                                    <th class="border border-black">Denda</th>
-                                    <th class="border border-black">Jumlah</th>
-                                </tr>
-
-                                <tr v-for="angs in responseProsesPayment.res.struktur" :key="angs.id">
-                                    <td class="border text-center border-black">{{ angs.angsuran_ke }}</td>
-                                    <td class="border pe-2 border-black">{{
-                                        parseInt(angs.bayar_angsuran).toLocaleString('US')
-                                        }}
-                                    </td>
-                                    <td class="border pe-2 border-black">{{
-                                        parseInt(angs.bayar_denda).toLocaleString('US')
-                                        }}
-                                    </td>
-                                    <td align="right" class="border pe-2 border-black">
-                                        {{
-                                            parseInt(parseInt(angs.bayar_angsuran) +
-                                                parseInt(angs.bayar_denda)).toLocaleString(('US'))
-                                        }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Total</strong></td>
-                                    <td colspan="3" align="right" class="pe-2">
-                                        <strong>{{
-                                            responseProsesPayment.res.total_bayar.toLocaleString("US")
-                                            }}</strong>
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                         <div class="flex flex-col border-b border-dashed border-black pb-4 ms-3">
                             <div class="flex gap-4">
                                 <div class="border-b border-black pt-20 px-4">
                                     <n-text strong class="text-md font-bold">{{
                                         responseProsesPayment.res.created_by
-                                        }}
+                                    }}
                                     </n-text>
                                 </div>
                                 <div class="border-b border-black pt-20 px-4">
                                     <n-text strong class="text-md font-bold">{{
                                         responseProsesPayment.res.nama
-                                        }}
+                                    }}
                                     </n-text>
                                 </div>
                             </div>
@@ -490,7 +441,7 @@ const modalProsesPayment = ref(false);
 const responseProsesPayment = ref();
 
 const backPayment = () => {
-    router.go(-1);
+   
 }
 const dataSearch = ref([]);
 const loadSearch = ref(false);
@@ -526,6 +477,7 @@ const optTipePay = [
 const dataPelunasan = ref([]);
 const pelunasan = reactive({
     LOAN_NUMBER: null,
+    KETERANGAN: null,
     METODE_PEMBAYARAN: "cash",
     SISA_POKOK: 0,
     BUNGA_BERJALAN: 0,
@@ -542,7 +494,6 @@ const pelunasan = reactive({
     DISKON_PINALTI: 0,
     DISKON_BUNGA: 0,
     DISKON_DENDA: 0,
-    KETERANGAN: null,
     JUMLAH_TAGIHAN: computed(
         () =>
             pelunasan.SISA_POKOK +

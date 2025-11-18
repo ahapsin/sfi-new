@@ -10,7 +10,7 @@
                                     <v-icon name="bi-search" />
                                 </template>
                             </n-input>
-                            <json-excel :data="showData" name="Data Barang">
+                            <json-excel :data="showData" name="Data Rekening Koran">
                                 <n-button size="small" secondary type="success">
                                     <template #icon>
                                         <v-icon name="bi-download" />
@@ -46,6 +46,7 @@ import { useMessage } from 'naive-ui';
 import BukaRekening from "./BukaRekening.vue";
 import TutupRekening from './TutupRekening.vue';
 import { useSearch } from '../../../../helpers/searchObject';
+import JsonExcel from "vue-json-excel3";
 
 const data = ref([]);
 const isLoading = ref(false);
@@ -107,12 +108,18 @@ const columns = [
         }
     },
     {
-        title: "Sisa",
-        key: "sisa"
+        title: "Sisa Pinjaman",
+        key: "sisa_pokok",
+        render(row) {
+            return h("div", row.sisa_pokok?.toLocaleString());
+        }
     },
     {
         title: "Tunggakan",
-        key: "tunggakan"
+        key: "tunggakan",
+        render(row) {
+            return h("div", row.tunggakan?.toLocaleString());
+        }
     },
 ]
 const showData = computed(() => {

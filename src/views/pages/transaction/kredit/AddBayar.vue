@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="flex flex-col">
                                         <small class="text-reg">Jumlah Uang</small>
-                                        <n-text strong class="text-md"> {{ responseProsesPayment.res.jumlah_uang
+                                        <n-text strong class="text-md"> {{ responseProsesPayment.res.jumlah_uang?.toLocaleString()
                                             }}</n-text>
                                     </div>
                                     <div class="flex flex-col">
