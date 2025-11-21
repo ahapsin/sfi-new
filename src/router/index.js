@@ -435,6 +435,12 @@ const routes = [
         name: "inquery jaminan",
         component: () => import("../views/pages/laporan/LapJaminan.vue"),
       },
+      {
+        path: "aging",
+        name: "Laporan Aging",
+        meta:{breadcrumb:'Umur Piutang'},
+        component: () => import("../views/pages/laporan/aging/LapAging.vue"),
+      },
     ],
   },
   {
