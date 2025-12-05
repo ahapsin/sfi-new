@@ -94,19 +94,47 @@ const columns = [
     },
     {
         title: "Nominal",
-        key: "saldo"
+        key: "nominal",
+        render(row) {
+            return h("div", row.nominal?.toLocaleString());
+        }
     },
     {
-        title: "Bunga",
+        title: "Periode",
+        key: "periode"
+    },
+    {
+        title: "Tgl Aktif",
+        key: "tgl_mulai"
+    },
+    {
+        title: "Bunga(%)",
         key: "bunga"
     },
     {
-        title: "Pajak",
-        key: "pajak"
+        title: "Nominal Bunga",
+        key: "nilai_bunga",
+         render(row) {
+            return h("div", row.nilai_bunga?.toLocaleString());
+        }
+    },
+    {
+        title: "Pajak Pph (20%)",
+        key: "pajak",
+        render(row) {
+            return h("div", row.pajak?.toLocaleString());
+        }
     },
     {
         title: "Bunga Setelah Pajak",
-        key: "net"
+        key: "bunga_pajak",
+        render(row) {
+            return h("div", row.bunga_pajak?.toLocaleString());
+        }
+    },
+    {
+        title: "Status",
+        key: "status",
     },
 ]
 

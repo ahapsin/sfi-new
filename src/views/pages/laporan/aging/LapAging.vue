@@ -2,217 +2,13 @@
     <n-card :class="`shadow-md`" title="Laporan Umur Piutang" :segmented="true" size="small">
         <template #header-extra>
             <n-space>
-                <n-date-picker placeholder="Tanggal" v-model:value="searchBox" clearable />
+                <n-date-picker v-model:formatted-value="dateFilter" placeholder="Tanggal" clearable
+                    value-format="yyyy-MM-dd" @update:value="handleUpdateFilter" />
             </n-space>
         </template>
-        <InqPiutang :columns="columnsPinjaman" :data="dataInqPinjaman" :loading="loadInqPinjaman"
-            @cari="handleCariInqPinjaman" :available="inqView" />
+        <InqPiutang :columns="columnsPinjaman" :data="dataAging" :loading="loadInqPinjaman"
+            @cari="handleCariInqPinjaman" :available="inqView" v-if="dateFilter"/>
     </n-card>
-    <n-modal v-model:show="modalDetail">
-        <n-card :class="`shadow-md`" content-style="padding: 0;" class="w-11/12">
-            <n-tabs type="line" :tabs-padding="20" pane-style="padding: 20px;" @before-leave="handleBeforeLeaveModal">
-                <n-tab-pane name="Kartu Piutang">
-                    <n-spin v-if="spinAngsuran" />
-                    <n-card :class="`shadow-md`" v-else>
-                        <div ref="printKartuRef" class="p-4">
-                            <div
-                                class="flex items-center gap-2 pb-2 justify-between border-b border-dashed border-black">
-                                <div class="flex gap-2 items-center">
-                                    <img class="h-10 md:h-10" :src="applogo" alt="logo_company" />
-                                    <div class="flex-col">
-                                        <div class="text-xl font-bold">{{ apptitle }}</div>
-                                        <div class="small">POS {{ me.me.cabang_nama }}</div>
-                                    </div>
-                                </div>
-                                <div class="text-lg font-bold hidden md:flex">KARTU PIUTANG</div>
-                            </div>
-                            <div class="grid grid-cols-2 font-mono border-b border-dashed border-black">
-                                <table>
-                                    <tr>
-                                        <td>NO KONTRAK</td>
-                                        <td>:</td>
-                                        <td>{{ dataHeaderAngsuran.no_kontrak }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>TGL KONTRAK</td>
-                                        <td>:</td>
-                                        <td>{{ dataHeaderAngsuran.tgl_kontrak }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>PELANGGAN</td>
-                                        <td>:</td>
-                                        <td>
-                                            {{ dataHeaderAngsuran.nama }}/
-                                            {{ dataHeaderAngsuran.no_pel }}
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <tr>
-                                        <td>STATUS</td>
-                                        <td>:</td>
-                                        <td>{{ dataHeaderAngsuran.status }}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="font-mono border-b border-dashed border-black">
-                                <table class="w-full">
-                                    <tr class="border-b border-dashed border-black">
-                                        <th class="p-2" align="right"
-                                            v-for="head in convertObjectToArray(dataDetailAngsuran)" :key="head.id">{{
-                                                head.title
-                                            }}
-                                        </th>
-                                    </tr>
-                                    <tr v-for="list in convertToValuesArray(dataDetailAngsuran)" :key="list.id">
-                                        <td v-for="item in list" :key="item.id" align="right">{{ item }}</td>
-                                    </tr>
-                                    <tr class="border-t border-dashed border-black">
-                                        <td colspan="3">JUMLAH</td>
-                                        <th align="right">
-                                            {{ dataFooter.ttlAmtAngs.toLocaleString() }}
-                                        </th>
-                                        <th align="right" colspan="3">
-                                        </th>
-
-                                        <th align="right">
-                                            {{ dataFooter.ttlAmtBayar.toLocaleString() }}
-                                        </th>
-                                        <th align="right">
-                                            {{ dataFooter.ttlSisaAngs.toLocaleString() }}
-                                        </th>
-                                        <th align="right">
-                                            {{ dataFooter.ttlDenda.toLocaleString() }}
-                                        </th>
-                                        <th align="right">
-                                            {{ dataFooter.ttlBayarDenda.toLocaleString() }}
-                                        </th>
-                                        <th align="right">
-                                        </th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <template #footer>
-                            <n-button type="primary" @click="handlePrintKartu">Cetak Kartu Piutang</n-button>
-                        </template>
-                    </n-card>
-                </n-tab-pane>
-                <n-tab-pane name="Pelanggan">
-                    <n-scrollbar style="max-height: 500px" trigger="none">
-                        <div class="grid grid-cols-5 gap-4">
-                            <div class="flex flex-col" v-for="(val, name) in dataDetailPelanggan.pelanggan"
-                                :key="val.id">
-                                <small class="text-reg">{{ name.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b"> {{ val ? val : 'N/A' }}</n-text>
-                            </div>
-                            <div class="flex flex-col" v-for="(val, name) in dataDetailPelanggan.pekerjaan"
-                                :key="val.id">
-                                <small class="text-reg">{{ name.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b "> {{ val ? val : 'N/A' }}</n-text>
-                            </div>
-                        </div>
-
-                        <n-divider title-placement="left">
-                            Kontak Darurat
-                        </n-divider>
-                        <div class="grid grid-cols-5 gap-4 font-mono">
-                            <div class="flex flex-col" v-for="(val, name) in dataDetailPelanggan.kerabat_darurat"
-                                :key="val.id">
-                                <small class="text-reg">{{ name.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b"> {{ val ? val : 'N/A' }}</n-text>
-                            </div>
-                        </div>
-                        <n-divider title-placement="left">
-                            Informasi Alamat Identitas
-                        </n-divider>
-                        <div class="grid grid-cols-5 gap-4 font-mono">
-                            <div class="flex flex-col" v-for="(val, name) in dataDetailPelanggan.alamat_identitas"
-                                :key="val.id">
-                                <small class="text-reg">{{ name.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b"> {{ val ? val : 'N/A' }}</n-text>
-                            </div>
-                        </div>
-                        <n-divider title-placement="left">
-                            Informasi Alamat Tagih
-                        </n-divider>
-                        <div class="grid grid-cols-5 gap-4 font-mono">
-                            <div class="flex flex-col" v-for="(val, name) in dataDetailPelanggan.alamat_tagih"
-                                :key="val.id">
-                                <small class="text-reg">{{ name.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b"> {{ val ? val : 'N/A' }}</n-text>
-                            </div>
-                        </div>
-                    </n-scrollbar>
-                </n-tab-pane>
-                <n-tab-pane name="Pinjaman">
-                    <n-spin :show="spinPinjaman">
-                        <div class="grid grid-rows-4 grid-flow-col gap-4 font-mono" v-if="dataDetailPinjaman">
-                            <div class="flex flex-col" v-for="list in dataDetailPinjaman" :key="list.id">
-                                <small class="text-reg">{{ list.title.toUpperCase() }}</small>
-                                <n-text strong class="text-md border-b"> {{ list.value ? list.value : 'N/A' }}</n-text>
-                            </div>
-                        </div>
-                    </n-spin>
-                </n-tab-pane>
-                <n-tab-pane name="Jaminan">
-                    <n-spin :show="spinJaminan">
-                        <table class="font-mono">
-                            <thead>
-                                <th v-for="head in convertObjectToArray(dataDetailJaminan)"
-                                    class="py-2 px-1 border border-black" :key="head.id">{{ head.title }}
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="body in dataDetailJaminan" :key="body.id">
-                                    <td v-for="head in convertObjectToArray(dataDetailJaminan)"
-                                        class="text-[12px] px-1 border border-black" :key="head.id">
-                                        {{ body[head.title] }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </n-spin>
-                </n-tab-pane>
-                <n-tab-pane name="Pembayaran">
-                    <n-spin :show="spinPembayaran">
-                        <table class="font-mono">
-                            <thead>
-                                <th v-for="head in convertObjectToArray(dataDetailPembayaran)"
-                                    class="py-2 border border-black" :key="head.id">{{ head.title }}
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="body in dataDetailPembayaran" :key="body.id">
-                                    <td v-for="head in convertObjectToArray(dataDetailPembayaran)"
-                                        class="text-[12px] px-1 border border-black" :key="head.id">{{ body[head.title]
-                                        }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </n-spin>
-                </n-tab-pane>
-                <n-tab-pane name="Tunggakan">
-                    <table class="font-mono">
-                        <thead>
-                            <th v-for="head in convertObjectToArray(dataDetailTunggakan)"
-                                class="py-2 border border-black" :key="head.id">{{ head.title }}
-                            </th>
-                        </thead>
-                        <tbody>
-                            <tr v-for="body in dataDetailTunggakan" :key="body.id">
-                                <td v-for="head in convertObjectToArray(dataDetailTunggakan)"
-                                    class="border border-black" :key="head.id">{{ body[head.title] }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </n-tab-pane>
-            </n-tabs>
-        </n-card>
-    </n-modal>
 </template>
 
 <script setup>
@@ -233,7 +29,8 @@ const applogo = import.meta.env.VITE_APP_LOGO;
 const message = useMessage();
 const me = useMeStore();
 const dataArusKas = ref([]);
-
+const dateFilter = ref();
+const dataAging = ref([]);
 const spinPinjaman = ref(false);
 const spinJaminan = ref(false);
 
@@ -242,6 +39,31 @@ const { handlePrint } = useVueToPrint({
     content: printKartuRef,
     documentTitle: "Kartu Piutang",
 });
+const formatDateYMD = (timestamp) => {
+    const date = new Date(timestamp);
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+};
+const handleUpdateFilter = async (value) => {
+    dateFilter.value = value;   // perbarui reaktif (kalau pakai ref)
+
+    const response = await useApi({
+        method: "POST",
+        api: `lap_aging`,
+        data: { tgl: formatDateYMD(value) },    // PAKAI VALUE YANG TERBARU
+        token: localStorage.getItem('token'),
+    });
+
+    if (!response.ok) {
+        message.error("ERROR API");
+    } else {
+        console.log(response);
+        dataAging.value = response.data;
+    }
+};
+
 const handlePrintKartu = () => {
     handlePrint();
 }
@@ -311,63 +133,123 @@ function convertToValuesArray(dataArray) {
 
 const columnsPinjaman = [
     {
-        title: "Nomor Order",
-        key: "loan_number",
+        title: "No Kontrak",
+        key: "no_kontrak",
         sorter: "default",
-    }, {
+        width:"150"
+    },
+    {
+        title: "Marketing",
+        key: "marketing",
+        sorter: "default",
+        width:"150"
+    },
+    {
         title: "Nama Debitur",
-        key: "customer_name",
+        key: "nama_debitur",
         sorter: "default",
+        width:"200"
     },
     {
         title: "Nomor Polisi",
-        key: "police_number",
+        key: "no_polisi",
         sorter: "default",
+        width:"150"
+    },
+    {
+        title: "Plafond",
+        key: "plafond",
+        sorter: "default",
+        width:"150",
+         render(row) {
+            return h("div", row.plafond?.toLocaleString());
+        }
+    },
+    {
+        title: "Tenor",
+        key: "no_polisi",
+        sorter: "default",
+        width:"150",
+        render(row) {
+            return h("div", row.tenor?.toLocaleString());
+        }
+    },
+    {
+        title: "Bunga",
+        key: "bunga",
+        sorter: "default",
+        width:"150",
+         render(row) {
+            return h("div", row.bunga?.toLocaleString());
+        }
+    },
+    {
+        title: "Angsuran",
+        key: "no_polisi",
+        sorter: "default",
+        width:"150",
+         render(row) {
+            return h("div", row.angsuran?.toLocaleString());
+        }
     },
     {
         title: "OS",
-        key: "police_number",
+        key: "os",
+        width:"150",
         sorter: "default",
+         render(row) {
+            return h("div", row.os?.toLocaleString());
+        }
     },
     {
-        title: "Tanggal Pencairan",
-        key: "entry_date",
+        title: "Tgl. Cair",
+        key: "tgl_cair",
         sorter: "default",
+        width:"150"
     },
     {
         title: "Cabang",
-        key: "branch_name",
+        key: "cabang",
         sorter: "default",
+        width:"150"
     },
     {
         title: "Tunggakan",
-        key: "branch_name",
+        key: "tunggakan",
+        width:"150",
         sorter: "default",
-    },
-    {
-        title: "Lama Tunggakan",
-        key: "branch_name",
-        sorter: "default",
-    },
-    {
-        title: "Action",
-        align: "right",
-        width: 100,
-        key: "more",
         render(row) {
-            return h(
-                NButton,
-                {
-                    secondary: false,
-                    size: "small",
-                    onClick: () => handleDetailRow(row),
-                },
-                {
-                    default: "detail",
-                }
-            );
-        },
+            return h("div", row.tunggakan?.toLocaleString());
+        }
     },
+    {
+        title: "Hr. Tunggakan",
+        key: "hr_tunggakan",
+        width:"150",
+        sorter: "default",
+         render(row) {
+            return h("div", row.lama_tunggakan?.toLocaleString());
+        }
+    },
+    // {
+    //     title: "Action",
+    //     align: "right",
+    //     width: 100,
+    //     key: "more",
+    //     render(row) {
+    //         return h(
+    //             NButton,
+    //             {
+    //                 secondary: false,
+    //                 size: "small",
+    //                 onClick: () => handleDetailRow(row),
+    //             },
+    //             {
+    //                 default: "detail",
+    //             }
+    //         );
+    //     },
+    // },
 
 ];
 
