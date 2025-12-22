@@ -79,6 +79,10 @@ const handleAdd = () => {
 }
 const columns = [
     {
+        title: "Metode ",
+        key: "payment_method",
+    },
+    {
         title: "Tanggal",
         key: "tgl_transaksi",
         sorter: "default"
@@ -93,12 +97,17 @@ const columns = [
         key: "nama",
         sorter: "default"
     },
+
     {
         title: "Nominal Bayar",
         key: "total_bayar",
         render(row) {
-            return h("div", row.total_bayar?.toLocaleString());
+            return h("div", row.jumlah_uang?.toLocaleString());
         }
+    },
+    {
+        title: "STATUS ",
+        key: "STATUS",
     },
 ]
 const showData = computed(() => {
