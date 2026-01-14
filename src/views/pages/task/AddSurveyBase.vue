@@ -31,8 +31,7 @@
                         </n-form-item>
                         <n-form-item label="Jenis Angsuran" path="jenis_angsuran" class="w-full">
                             <n-select filterable placeholder="Jenis Angsuran" :options="jenisAngsuran"
-                                v-model:value="order.jenis_angsuran" 
-                                :disabled="order.plafond != 0 ? false : true" />
+                                v-model:value="order.jenis_angsuran" :disabled="order.plafond != 0 ? false : true" />
                         </n-form-item>
                     </div>
                     <div class="md:flex gap-2">
@@ -42,10 +41,10 @@
                         </n-form-item>
                         <n-form-item label="Bunga " path="bunga" class="w-full">
                             <div class="flex gap-2 w-full">
-                                <n-input-number class="w-full" :show-button="false" v-model:value="order.bunga" :min="0"
+                                <n-input class="w-full" :show-button="false" v-model:value="order.bunga" :min="0"
                                     :max="100">
                                     <template #suffix>% /bulan</template>
-                                </n-input-number>
+                                </n-input>
                                 <n-input :show-button="false" pacleholder="tahunan" class="w-full"
                                     v-model:value="order.bunga_tahunan" :min="1" :max="100" readonly>
                                     <template #suffix>% / tahun</template>
@@ -503,8 +502,8 @@ const tujuanKredit = ["KONSUMSI", "INVESTASI"].map((v) => ({
     value: v,
 }));
 const jenisAngsuran = ["BULANAN", "REKENING KORAN"].map((v) => ({
-  label: v,
-  value: v.toLowerCase().replace(/\s+/g, "_"),
+    label: v,
+    value: v.toLowerCase().replace(/\s+/g, "_"),
 }));
 const optKategori = ["BARU", "RO"].map((v) => ({
     label: v,
@@ -538,7 +537,7 @@ const order = reactive({
     plafond: null,
     tenor: 6,
     bunga: 0,
-    bunga_tahunan: computed(() => (parseInt(order.bunga) * 12).toFixed(2)),
+    bunga_tahunan: computed(() => (order.bunga * 12).toFixed(2)),
     angsuran: computed(() => (Math.ceil(Math.round((order.plafond * order.bunga / 100) * order.tenor + order.plafond) / order.tenor / 1000) * 1000)),
     jenis_angsuran: null,
 });
@@ -857,7 +856,7 @@ const rulesSurvey = {
     },
 
 };
-const tenor = [6, 12, 18, 24, 36, 48, 60].map((i) => ({
+const tenor = [1, 3, 6, 12, 18, 24, 36, 48, 60].map((i) => ({
     value: i,
     label: `${i} Bulan`
 }))
