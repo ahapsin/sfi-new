@@ -1,46 +1,44 @@
 <template>
   <n-scrollbar style="max-height: 400px">
-  <div>
-        <n-form ref="formOrder" :model="order" :rules="rulesOrder" require-mark-placement="right-hanging">
-          <div class="md:flex gap-2">
-            <n-form-item label="Plafond" path="plafond" class="w-full">
-              <n-input-number :parse="parse" :format="format" :min="999999" v-model:value="order.plafond"
-                              placeholder="plafond" :loading="loading" :show-button="false" class="flex !w-full"
-                              clearable :on-update:value="handlePlafond" />
-            </n-form-item>
-            <n-form-item label="Jenis Angsuran" path="jenis_angsuran" class="w-full">
-              <n-select filterable placeholder="Jenis Angsuran" :options="jenisAngsuran"
-                        v-model:value="order.jenis_angsuran" :on-update:value="handleTipe"
-                        :disabled="order.plafond != 0 ? false : true" />
-            </n-form-item>
-          </div>
-          <div class="md:flex gap-2">
-            <n-form-item label="Tenor " path="tenor" class="w-full">
-              <n-select :options="tenor" label-field="label" value-field="value"
-                        v-model:value="order.tenor" />
-            </n-form-item>
-            <n-form-item label="Bunga " path="bunga" class="w-full">
-              <div class="flex gap-2">
-                <n-input-number :show-button="false" v-model:value="order.bunga" :min="0" :max="100">
-                  <template #suffix>% /bulan</template>
-                </n-input-number>
-                <n-input pacleholder="tahunan" v-model:value="order.bunga_tahunan" :min="1" :max="100"
-                         readonly>
-                  <template #suffix>% / tahun</template>
-                </n-input>
-              </div>
-            </n-form-item>
-            <n-form-item label="Angsuran " path="angsuran" class="w-full">
-              <n-input-number class="w-full" readonly :parse="parse" :format="format"
-                              v-model:value="order.angsuran" placeholder="angsuran" :show-button="false" />
-            </n-form-item>
-            <n-form-item label="Tujuan Kredit" path="tujuan_kredit" class="w-full">
-              <n-select filterable placeholder="Tujuan Kredit" :options="tujuanKredit"
-                        v-model:value="order.tujuan_kredit" />
-            </n-form-item>
-          </div>
-        </n-form>
-      </div>
+    <div>
+      <n-form ref="formOrder" :model="order" :rules="rulesOrder" require-mark-placement="right-hanging">
+        <div class="md:flex gap-2">
+          <n-form-item label="Plafond" path="plafond" class="w-full">
+            <n-input-number :parse="parse" :format="format" :min="999999" v-model:value="order.plafond"
+              placeholder="plafond" :loading="loading" :show-button="false" class="flex !w-full" clearable
+              :on-update:value="handlePlafond" />
+          </n-form-item>
+          <n-form-item label="Jenis Angsuran" path="jenis_angsuran" class="w-full">
+            <n-select filterable placeholder="Jenis Angsuran" :options="jenisAngsuran"
+              v-model:value="order.jenis_angsuran" :on-update:value="handleTipe"
+              :disabled="order.plafond != 0 ? false : true" />
+          </n-form-item>
+        </div>
+        <div class="md:flex gap-2">
+          <n-form-item label="Tenor " path="tenor" class="w-full">
+            <n-select :options="tenor" label-field="label" value-field="value" v-model:value="order.tenor" />
+          </n-form-item>
+          <n-form-item label="Bunga " path="bunga" class="w-full">
+            <div class="flex gap-2">
+              <n-input-number :show-button="false" v-model:value="order.bunga" :min="0" :max="100">
+                <template #suffix>% /bulan</template>
+              </n-input-number>
+              <n-input pacleholder="tahunan" v-model:value="order.bunga_tahunan" :min="1" :max="100" readonly>
+                <template #suffix>% / tahun</template>
+              </n-input>
+            </div>
+          </n-form-item>
+          <n-form-item label="Angsuran " path="angsuran" class="w-full">
+            <n-input-number class="w-full" readonly :parse="parse" :format="format" v-model:value="order.angsuran"
+              placeholder="angsuran" :show-button="false" />
+          </n-form-item>
+          <n-form-item label="Tujuan Kredit" path="tujuan_kredit" class="w-full">
+            <n-select filterable placeholder="Tujuan Kredit" :options="tujuanKredit"
+              v-model:value="order.tujuan_kredit" />
+          </n-form-item>
+        </div>
+      </n-form>
+    </div>
   </n-scrollbar>
 </template>
 <script setup>
@@ -435,7 +433,7 @@ const rulesSurvey = {
   },
 
 };
-const tenor = [6, 12, 18, 24, 36, 48, 60].map((i) => ({
+const tenor = [1, 3, 6, 12, 18, 24, 36, 48, 60].map((i) => ({
   value: i,
   label: `${i} Bulan`
 }))
