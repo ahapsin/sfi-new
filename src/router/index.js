@@ -63,7 +63,7 @@ const routes = [
       {
         path: "rek_koran",
         name: "rekening koran",
-        meta:{breadcrumb:'Rekening Koran'},
+        meta: { breadcrumb: "Rekening Koran" },
         component: () =>
           import("../views/pages/transaction/rek_koran/rekKoranLayout.vue"),
       },
@@ -88,7 +88,8 @@ const routes = [
         path: "add_topup_rk",
         name: "add_topup_rk",
         meta: { breadcrumb: "Add Topup Rekening Koran" },
-        component: () => import("../views/pages/transaction/rk/AddTopUpPage.vue"),
+        component: () =>
+          import("../views/pages/transaction/rk/AddTopUpPage.vue"),
       },
       {
         path: "addpayment",
@@ -226,7 +227,7 @@ const routes = [
       {
         path: "new-survey",
         name: "tambah survey",
-        meta:{breadcrumb:'Survey Baru'},
+        meta: { breadcrumb: "Survey Baru" },
         component: () => import("../views/pages/task/AddSurveyPage.vue"),
       },
     ],
@@ -438,8 +439,15 @@ const routes = [
       {
         path: "aging",
         name: "Laporan Aging",
-        meta:{breadcrumb:'Umur Piutang'},
+        meta: { breadcrumb: "Umur Piutang" },
         component: () => import("../views/pages/laporan/aging/LapAging.vue"),
+      },
+      {
+        path: "tunggakan",
+        name: "Laporan Tunggakan",
+        meta: { breadcrumb: "Tunggakan" },
+        component: () =>
+          import("../views/pages/laporan/tunggakan/LapTunggakan.vue"),
       },
     ],
   },

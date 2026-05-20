@@ -13,7 +13,7 @@
                 </n-form-item>
 
             </div>
-            
+
             <n-space vertical v-if="rekening">
                 <n-card :class="`shadow-md`" v-if="selectedRekening">
                     <div class="grid grid-cols-1 md:grid-cols-3  bg-white">
@@ -22,7 +22,7 @@
                                 <div><strong class="capitalize">{{ formatKey(key) }}</strong></div>
                                 <div>
                                     <n-ellipsis style="max-width: 120px">{{ value ? value : 'N/A'
-                                    }}</n-ellipsis>
+                                        }}</n-ellipsis>
                                 </div>
                             </div>
                         </div>
@@ -69,12 +69,12 @@
                         <div class="flex flex-col">
                             <small class="text-reg">Nominal</small>
                             <n-text strong class="text-md border-b">{{ detailDepo.jumlah_pokok?.toLocaleString()
-                            }}</n-text>
+                                }}</n-text>
                         </div>
                         <div class="flex flex-col">
                             <small class="text-reg">Bunga</small>
                             <n-text strong class="text-md border-b">{{ detailDepo.nilai_bunga?.toLocaleString()
-                            }}</n-text>
+                                }}</n-text>
                         </div>
                         <div class="flex flex-col">
                             <small class="text-reg">Pajak Atas Bunga</small>
@@ -103,13 +103,13 @@
                                         <small class="text-reg">No Rekening</small>
                                         <n-text strong class="text-md border-b">{{
                                             detailDepo.no_rek_tujuan
-                                        }}</n-text>
+                                            }}</n-text>
                                     </div>
                                     <div class="flex flex-col">
                                         <small class="text-reg">Atas Nama</small>
                                         <n-text strong class="text-md border-b">{{
                                             detailDepo.nama_rek_tujuan
-                                        }}</n-text>
+                                            }}</n-text>
                                     </div>
                                 </div>
                             </div>
@@ -118,12 +118,12 @@
                             </n-form-item>
                         </div>
                     </n-form>
-                </n-card> 
+                </n-card>
             </n-space>
             <template #footer>
                 <n-space>
                     <n-button type="primary" @click="handleSave">Simpan</n-button>
-                        <n-button type="error" secondary @click="handleBatal">Batal</n-button>
+                    <n-button type="error" secondary @click="handleBatal">Batal</n-button>
                 </n-space>
             </template>
         </n-card>
@@ -195,17 +195,19 @@ const fetchRekening = async () => {
 }
 const postClosedRekening = async (e) => {
     isLoading.value = true;
-    const response = await useApi({
-        url: 'http://localhost:3001/closed_rekening',
-        method: 'POST',
-        data: e
+     const response = await useApi({
+        api: `deposits/${detailDepo.value?.no_deposito}`,
+        method: 'PUT',
+        data:{},
+        token: localStorage.getItem('token')
     });
     if (!response.ok) {
         message.error("error");
         isLoading.value = false;
     } else {
         isLoading.value = false;
-    };
+        detailDepo.value = response.data;
+    }
 }
 
 const detailDepoView = (data) => ({
@@ -247,14 +249,14 @@ const handleAdd = () => {
 }
 const handleSave = async () => {
     const body = {
-        no_rekening: selectedRekening.value.no_rekening,
-        alamat: selectedRekening.value.alamat,
-        nama_pemilik: selectedRekening.value.nama_pemilik,
-        nama_ibu_kandung: selectedRekening.value.nama_ibu_kandung,
-        cabang: selectedRekening.value.cabang,
-        no_identitas: selectedRekening.value.no_identitas,
-        tgl_tutup: tgl_valuta.value,
-        saldo: selectedRekening.value.saldo,
+        no_rekening: selectedRekening.value?.no_rekening,
+        alamat: selectedRekening.value?.alamat,
+        nama_pemilik: selectedRekening.value?.nama_pemilik,
+        nama_ibu_kandung: selectedRekening.value?.nama_ibu_kandung,
+        cabang: selectedRekening.value?.cabang,
+        no_identitas: selectedRekening.value?.no_identitas,
+        tgl_tutup: tgl_valuta?.value,
+        saldo: selectedRekening.value?.saldo,
         keterangan: keterangan.value
     }
     await postClosedRekening(body);
@@ -269,6 +271,7 @@ const handleBatal = () => {
     emit('cancel');
 }
 const emit = defineEmits();
+const message = useMessage();
 const detailDepo = ref([]);
 const handleUpdateValue = async (val, options) => {
     const response = await useApi({
