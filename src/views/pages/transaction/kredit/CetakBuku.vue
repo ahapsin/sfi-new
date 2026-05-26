@@ -2,12 +2,13 @@
     <div class="flex gap-4 w-full">
         <div class="w-full">
             <n-space vertical>
-                <n-card :class="`shadow-md`"  title="Cetak Bilyet" :segmented="true" size="small">
+                <n-card :class="`shadow-md`" title="Cetak Bilyet" :segmented="true" size="small">
                     <n-form-item label="Pilih No Deposito" class="w-full">
                         <n-select filterable v-model:value="rekening" :options="selectOptions"
                             @update:value="handleUpdateValue" />
                     </n-form-item>
-                    <n-card :class="`shadow-md`"  v-if="selectedRekening" embedded title="Detail Bilyet" size="small" :segmented="true">
+                    <n-card :class="`shadow-md`" v-if="selectedRekening" embedded title="Detail Bilyet" size="small"
+                        :segmented="true">
                         <template #header-extra>
                             <n-space>
                                 <n-button type="primary" @click="printBillyet">Cetak Billyet</n-button>
@@ -96,7 +97,7 @@
                                         <n-text italic>Terbilang</n-text>
                                         <n-text strong class="justify-center flex">==={{
                                             terbilang(selectedRekening.jumlah_pokok)
-                                            }} Rupiah===</n-text>
+                                        }} Rupiah===</n-text>
                                     </div>
                                     <div class="mt-4">
                                         <div class="flex justify-center strong"><strong>KSP SAKURA FINANSIAL
@@ -108,8 +109,8 @@
                                                 <n-text class="text-[12px]" strong>Branch Manager</n-text>
                                             </div>
                                             <div>
-                                                <n-text underline strong class="block">LYDIA MASEHI</n-text>
-                                                <n-text class="text-[12px]" strong>Ketua</n-text>
+                                                <n-text underline strong class="block">DEVIN CAHYANI</n-text>
+                                                <n-text class="text-[12px]" strong>Manager Operasional</n-text>
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +119,8 @@
                         </div>
                         <n-divider>Halaman Belakang</n-divider>
                         <div class="border border-black p-4 bg-yellow-50 h-[13.5cm]" ref="halBelakang">
-                            <div class="flex justify-center font-bold p-2 border-b border-black">SYARAT - SYARAT SIMPANAN BERJANGKA</div>
+                            <div class="flex justify-center font-bold p-2 border-b border-black">SYARAT - SYARAT
+                                SIMPANAN BERJANGKA</div>
                             <div class="flex gap-10 p-2 text-[10px]">
                                 <div>
                                     <ol class="list-decimal list-inside space-y-2">
@@ -247,11 +249,10 @@
 </template>
 
 <script setup>
+import _ from 'lodash';
 import { onMounted } from 'vue';
-import { useApi } from '../../../../helpers/axios';
-import _ from 'lodash'
-import moment from 'moment';
 import { useVueToPrint } from 'vue-to-print';
+import { useApi } from '../../../../helpers/axios';
 const applogo = import.meta.env.VITE_APP_LOGO;
 const apptitle = import.meta.env.VITE_APP_TITLE;
 
@@ -280,7 +281,7 @@ const halBarisAwal = ref({ hal: 1, baris: 1 })
 const halBarisAkhir = ref({ hal: 2, baris: 1 })
 
 const billyetRef = ref();
-const halBelakang=ref();
+const halBelakang = ref();
 const printBillyet = () => {
     const { handlePrint } = useVueToPrint({
         content: billyetRef,

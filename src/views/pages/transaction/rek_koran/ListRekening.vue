@@ -28,10 +28,10 @@
             </n-space>
         </div>
     </div>
-    <n-modal v-model:show="modalBukaRekening">
-        <div class="w-[80%]">
-            <BukaRekening @saved="handleSavedNewAccount" @cancel="handleCancelBuka" />
-        </div>
+    <n-modal v-model:show="modalDetail">
+        <n-card class="w-[80%]">
+            detail transaksi rekening koran
+        </n-card>
     </n-modal>
     <n-modal v-model:show="modalTutupRekening" :mask-closable="false">
         <div class="w-2/4">
@@ -40,20 +40,19 @@
     </n-modal>
 </template>
 <script setup>
+import { NButton, useMessage } from 'naive-ui';
 import { onMounted } from 'vue';
-import { useApi } from '../../../../helpers/axios';
-import { useMessage } from 'naive-ui';
-import BukaRekening from "./BukaRekening.vue";
-import TutupRekening from './TutupRekening.vue';
-import { useSearch } from '../../../../helpers/searchObject';
 import JsonExcel from "vue-json-excel3";
+import { useApi } from '../../../../helpers/axios';
+import { useSearch } from '../../../../helpers/searchObject';
+import TutupRekening from './TutupRekening.vue';
 
 const data = ref([]);
 const isLoading = ref(false);
 const message = useMessage();
 const search = ref();
 
-const modalBukaRekening = ref(false);
+const modalDetail = ref(false);
 const modalTutupRekening = ref(false);
 
 const handleBukaRekening = () => {
@@ -95,12 +94,12 @@ const columns = [
     {
         title: "No Rekening",
         key: "loan_number",
-         sorter: "default"
+        sorter: "default"
     },
     {
         title: "Atas Nama",
         key: "nama",
-         sorter: "default"
+        sorter: "default"
     },
     {
         title: "Nilai Pinjaman",
@@ -123,7 +122,20 @@ const columns = [
             return h("div", row.tunggakan?.toLocaleString());
         }
     },
+    {
+        title: "",
+        key: "",
+        align: "right",
+        render(row) {
+            return h(NButton, { size: "small", onClick: () => handleDetail(row) }, { default: () => "detail" });
+        }
+    },
 ]
+
+const handleDetail = (e) => {
+    modalDetail.value = true;
+    console.log(e)
+}
 const showData = computed(() => {
     return useSearch(data.value, search.value);
 });
