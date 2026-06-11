@@ -109,8 +109,8 @@
                                                 <n-text class="text-[12px]" strong>Branch Manager</n-text>
                                             </div>
                                             <div>
-                                                <n-text underline strong class="block">LYDIA MASEHI</n-text>
-                                                <n-text class="text-[12px]" strong>Ketua</n-text>
+                                                <n-text underline strong class="block">DEVIN CAHYANI</n-text>
+                                                <n-text class="text-[12px]" strong>Manager Operasional</n-text>
                                             </div>
                                         </div>
                                     </div>
