@@ -100,7 +100,6 @@
             <n-divider title-placement="left">Dokumen Identitas</n-divider>
             <n-space justify="space-between">
                 <n-space>
-                    {{ modelCustomer }}
                     <file-upload title="FOTO IDENTITAS" endpoint="upload_saving_doc" type="ktp"
                         :idapp="modelCustomer.no_identitas" />
                 </n-space>
