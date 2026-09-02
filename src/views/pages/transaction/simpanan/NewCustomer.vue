@@ -1,5 +1,6 @@
 <template>
-    <n-card :class="`shadow-md`"  size="small" title="Informasi Data Pelanggan" :segmented="{ content: true, footer: 'soft' }">
+    <n-card :class="`shadow-md`" size="small" title="Informasi Data Pelanggan"
+        :segmented="{ content: true, footer: 'soft' }">
         <n-form ref="formPelanggan" :label-placement="width <= 920 ? 'top' : 'top'"
             require-mark-placement="right-hanging" label-width="auto">
             <div class="flex w-full gap-2">
@@ -17,17 +18,19 @@
                         placeholder="Jenis Kelamin" :options="optJenisKelamin" />
                 </n-form-item>
                 <n-form-item label="Tempat Lahir" path="tempat_lahir" class="w-full">
-                    <n-input placeholder="tempat lahir" />
+                    <n-input placeholder="tempat lahir" v-model:value="modelCustomer.tempat_lahir" />
                 </n-form-item>
                 <n-form-item label="Tanggal lahir" path="tgl_lahir" class="w-full">
                     <n-date-picker input-readonly placeholder="Tanggal Lahir" :disabled="props.viewMode"
-                        value-format="yyyy-MM-dd" format="dd-MM-yyyy" type="date" class="w-full" />
+                        value-format="yyyy-MM-dd" format="dd-MM-yyyy" type="date" class="w-full"
+                        v-model:formatted-value="modelCustomer.tanggal_lahir" />
 
                 </n-form-item>
                 <n-form-item label="Status Kawin" path="status_kawin" class="w-full">
                     <n-input-group>
                         <n-input v-if="viewMode" />
-                        <n-select v-else filterable placeholder="Status Kawin" :options="optKawin" />
+                        <n-select v-else filterable placeholder="Status Kawin" :options="optKawin"
+                            v-model:value="modelCustomer.status_kawin" />
                     </n-input-group>
                 </n-form-item>
             </div>
@@ -35,11 +38,12 @@
             <div class="flex w-full gap-2">
                 <n-form-item label="Tipe Identitas" path="tipe_identitas" class="w-full">
                     <n-input v-if="viewMode" />
-                    <n-select v-else filterable placeholder="Jenis Identitas" :options="optJenisIdentitas" />
+                    <n-select v-else filterable placeholder="Jenis Identitas" :options="optJenisIdentitas"
+                        v-model:value="modelCustomer.tipe_identitas" />
                 </n-form-item>
                 <n-form-item label="No Identitas" path="no_identitas" class="w-full">
                     <n-input :allow-input="onlyAllowNumber" class="w-full" placeholder="No Identitas" show-count
-                        :maxlength="16" />
+                        :maxlength="16" v-model:value="modelCustomer.no_identitas" />
                 </n-form-item>
 
             </div>
@@ -96,7 +100,9 @@
             <n-divider title-placement="left">Dokumen Identitas</n-divider>
             <n-space justify="space-between">
                 <n-space>
-                    <file-upload title="FOTO IDENTITAS" endpoint="upload_saving_doc" type="ktp" :idapp="modelCustomer.no_ktp" />
+                    {{ modelCustomer }}
+                    <file-upload title="FOTO IDENTITAS" endpoint="upload_saving_doc" type="ktp"
+                        :idapp="modelCustomer.no_identitas" />
                 </n-space>
             </n-space>
         </n-form>
@@ -155,7 +161,7 @@ const optPendidikan = [
     label: v,
     value: v,
 }));
-const optJenisIdentitas = ["KTP","PASPOR"].map((v) => ({
+const optJenisIdentitas = ["KTP", "PASPOR"].map((v) => ({
     label: v,
     value: v,
 }));
@@ -199,7 +205,7 @@ const postData = async (e) => {
     const response = await useApi({
         api: 'customers',
         method: 'POST',
-        token:localStorage.getItem('token'),
+        token: localStorage.getItem('token'),
         data: e
     });
     if (!response.ok) {
