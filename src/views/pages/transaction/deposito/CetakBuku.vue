@@ -97,7 +97,7 @@
                                         <n-text italic>Terbilang</n-text>
                                         <n-text strong class="justify-center flex">==={{
                                             terbilang(selectedRekening.jumlah_pokok)
-                                        }} Rupiah===</n-text>
+                                            }} Rupiah===</n-text>
                                     </div>
                                     <div class="mt-4">
                                         <div class="flex justify-center strong"><strong>KSP SAKURA FINANSIAL
@@ -110,7 +110,7 @@
                                             </div>
                                             <div>
                                                 <n-text underline strong class="block">DEVIN CAHYANI</n-text>
-                                                <n-text class="text-[12px]" strong>Ketua</n-text>
+                                                <n-text class="text-[12px]" strong>Operations Manager</n-text>
                                             </div>
                                         </div>
                                     </div>
